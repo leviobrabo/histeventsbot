@@ -1,0 +1,64 @@
+{
+  "name": "Historical Events",
+  "description": "'Historical Events' is a Bot that sends historical events of each day of the month",
+  "repository": "https://github.com/leviobrabo/historicaleventsbot",
+  "logo": "https://i.imgur.com/XXxV74z.jpeg",
+  "keywords": [
+    "python",
+    "fatos_históricos",
+    "telegrambot"
+  ],
+  "website": "https://github.com/leviobrabo/historicaleventsbot",
+  "success_url": "https://t.me/fatoshistbot",
+  "HISTORICALEVENTS": {
+    "TOKEN": {
+      "description": "Make a bot at BotFather http://telegram.dog/BotFather and get the token of your bot",
+      "value": "",
+      "required": true
+    },
+    "HIST_LOG": {
+      "description": "Group ID LOG Telegram.",
+      "value": "",
+      "required": true
+    },
+    "HIST_CHANNEL": {
+      "description": "Channel ID post Telegram.",
+      "value": "",
+      "required": true
+    },
+    "HIST_CHANNEL_POST": {
+      "description": "Channel ID post Telegram Status.",
+      "value": "",
+      "required": true
+    },
+    "BOT_NAME": {
+      "description": "BOT NAME",
+      "value": "",
+      "required": true
+    },
+    "BOT_USERNAME": {
+      "description": "BOT USERNAME",
+      "value": "",
+      "required": true
+    },
+    "OWNER_ID": {
+      "description": "owner id Telegram",
+      "value": "",
+      "required": true
+    }
+  },
+  "LOG": {
+    "LOG_PATH": {
+      "description": "Path to the log-file",
+      "value": "",
+      "required": true
+    }
+  },
+  "DB": {
+    "MONGO_CON": {
+      "description": "Create database at MongoDB Atlas https://www.mongodb.com/ create new cluster and get url for connection.",
+      "value": "",
+      "required": true
+    }
+  }
+}

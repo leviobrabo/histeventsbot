@@ -1,0 +1,54 @@
+import json
+from datetime import datetime
+
+import pytz
+
+from historicalevents.bot.bot import bot
+from historicalevents.config import *
+from historicalevents.database.db import *
+from historicalevents.loggers import logger
+from historicalevents.utils.get_historical import *
+from historicalevents.utils.month import *
+
+
+def get_curiosity(CHANNEL):
+    try:
+        today = datetime.now(pytz.timezone('America/Sao_Paulo'))
+        day = today.day
+        month = today.month
+
+        with open(
+            './historicalevents/data/curisity.json', 'r', encoding='utf-8'
+        ) as file:
+            json_events = json.load(file)
+            curiosity = json_events.get(f'{month}-{day}', {}).get(
+                'curiosity', []
+            )
+            if curiosity:
+                info = curiosity[0].get('text', '')
+
+                # For 2025 (uncomment this line and comment the line above)
+                # info = curiosidade[1].get("texto1", "")
+
+                message = f'<b>Historical Curiosities 📜</b>\n\n{info}\n\n💬 Did you know? Follow @today_in_historys.'
+                bot.send_message(CHANNEL, message)
+            else:
+                logger.info('-' * 50)
+                logger.info('No information available for today.')
+                logger.info('-' * 50)
+    except Exception as e:
+        logger.info('-' * 50)
+        logger.error('Error fetching information:', str(e))
+        logger.info('-' * 50)
+
+
+def hist_channel_curiosity():
+    try:
+        get_curiosity(CHANNEL)
+        logger.info('-' * 50)
+        logger.success(f'Curiosity sent to the channel {CHANNEL}')
+        logger.info('-' * 50)
+    except Exception as e:
+        logger.info('-' * 50)
+        logger.error('Error sending curiosity job:', str(e))
+        logger.info('-' * 50)
