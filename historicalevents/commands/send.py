@@ -7,7 +7,7 @@ from historicalevents.loggers import logger
 
 
 @bot.message_handler(commands=['sendon'])
-def commands_sendon(message):
+def cmd_sendon(message):
     try:
         if message.chat.type != 'private':
             return
@@ -37,7 +37,7 @@ def commands_sendon(message):
 
 
 @bot.message_handler(commands=['sendoff'])
-def commands_sendff(message):
+def cmd_sendoff(message):
     try:
         if message.chat.type != 'private':
             return

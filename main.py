@@ -6,24 +6,25 @@ from telebot import util
 
 from historicalevents.bot.bot import bot
 from historicalevents.commands.admin import (
-    commands_fwdoff,
-    commands_fwdon,
-    commands_settopic,
-    commands_unsettopic,
+    cmd_fwdoff,
+    cmd_fwdon,
+    cmd_settopic,
+    cmd_unsettopic,
 )
-from historicalevents.commands.photoshist import fotos_hist
+from historicalevents.commands.photoshist import cmd_photo_hist
 from historicalevents.commands.help import cmd_help
-from historicalevents.commands.send import commands_sendff, commands_sendon
+from historicalevents.commands.send import cmd_sendoff, cmd_sendon
 from historicalevents.commands.start import cmd_start
 from historicalevents.commands.sudo import (
-    add_sudo,
-    commands_sudo,
-    grupos,
-    handle_broadcast_chat,
-    handle_broadcast_pv,
-    list_devs,
-    stats,
-    unsudo_command,
+    cmd_add_sudo,
+    cmd_sudo,
+    cmd_group,
+    cmd_broadcast_chat,
+    cmd_broadcast_pv,
+    cmd_list_devs,
+    cmd_stats,
+    cmd_rem_sudo,
+    cmd_sys,
 )
 from historicalevents.config import *
 from historicalevents.core.poll_channel import *
@@ -43,23 +44,6 @@ from historicalevents.handlers.presidents import *
 from historicalevents.loggers import logger
 from historicalevents.utils.welcome import *
 
-bot.add_message_handler(cmd_start)
-bot.add_message_handler(cmd_help)
-bot.add_message_handler(add_sudo)
-bot.add_message_handler(unsudo_command)
-bot.add_message_handler(grupos)
-bot.add_message_handler(stats)
-bot.add_message_handler(handle_broadcast_pv)
-bot.add_message_handler(handle_broadcast_chat)
-bot.add_message_handler(list_devs)
-bot.add_message_handler(commands_sudo)
-bot.add_message_handler(commands_sendon)
-bot.add_message_handler(commands_sendff)
-bot.add_message_handler(commands_fwdon)
-bot.add_message_handler(commands_fwdoff)
-bot.add_message_handler(commands_settopic)
-bot.add_message_handler(commands_unsettopic)
-
 
 def sudos(user_id):
     user = search_user(user_id)
@@ -72,41 +56,25 @@ def set_my_configs():
     try:
         bot.set_my_commands(
             [
-                types.BotCommand('/start', 'start'),
-                types.BotCommand('/help', 'help'),
+                types.BotCommand('/start', 'Iniciar'),
+                types.BotCommand('/fotoshist', 'Fotos de fatos históricos 🙂'),
+                types.BotCommand('/help', 'Ajuda'),
+                types.BotCommand(
+                    '/sendon', 'Receberá às 8 horas a mensagem diária'
+                ),
+                types.BotCommand(
+                    '/sendoff', 'Não receberá às 8 horas a mensagem diária'
+                ),
             ],
             scope=types.BotCommandScopeAllPrivateChats(),
         )
     except Exception as ex:
         logger.error(ex)
 
-    for sudo in sudos:
-        try:
-            bot.set_my_commands(
-                [
-                    types.BotCommand('/sys', 'Server usage'),
-                    types.BotCommand('/sudo', 'Elevate user'),
-                    types.BotCommand('/ban', 'Ban user from bot'),
-                    types.BotCommand('/sudolist', 'List of sudo users'),
-                    types.BotCommand('/banneds', 'List of banned users'),
-                    types.BotCommand(
-                        '/bcusers', 'Send broadcast message to users'
-                    ),
-                    types.BotCommand(
-                        '/bcgps', 'Send broadcast message to groups'
-                    ),
-                ],
-                scope=types.BotCommandScopeChat(chat_id=sudo),
-            )
-
-        except Exception as ex:
-            logger.error(ex)
-
     try:
         bot.set_my_commands(
             [
-                types.BotCommand('/start', 'start'),
-                types.BotCommand('/help', 'help'),
+                types.BotCommand('/fotoshist', 'Fotos de fatos históricos 🙂'),
             ],
             scope=types.BotCommandScopeAllGroupChats(),
         )
@@ -116,16 +84,56 @@ def set_my_configs():
     try:
         bot.set_my_commands(
             [
-                types.BotCommand('/start', 'start'),
-                types.BotCommand('/help', 'help'),
+                types.BotCommand(
+                    '/settopic',
+                    'definir um chat como tópico para receber as mensagens diárias',
+                ),
+                types.BotCommand(
+                    '/unsettopic',
+                    'remove um chat como tópico para receber as mensagens diárias (retorna para o General)',
+                ),
+                types.BotCommand('/fotoshist', 'Fotos de fatos históricos 🙂'),
+                types.BotCommand('/fwdon', 'ativa o encaminhamento no grupo'),
+                types.BotCommand(
+                    '/fwdoff', 'desativa o encaminhamento no grupo'
+                ),
             ],
-            scope=types.BotCommandScopeChatAdministrators(),
+            scope=types.BotCommandScopeAllChatAdministrators(),
         )
     except Exception as ex:
         logger.error(ex)
 
+    all_users = get_all_users()
+    for user in all_users:
+        if sudos(user.get('user_id')):
+            try:
+                bot.set_my_commands(
+                    [
+                        types.BotCommand('/sys', 'Uso do servidor'),
+                        types.BotCommand('/sudo', 'Elevar usuário'),
+                        types.BotCommand('/ban', 'Banir usuário do bot'),
+                        types.BotCommand(
+                            '/sudolist', 'Lista de usuários sudo'
+                        ),
+                        types.BotCommand(
+                            '/banneds', 'Lista de usuários banidos'
+                        ),
+                        types.BotCommand(
+                            '/bcusers', 'Enviar msg broadcast para usuários'
+                        ),
+                        types.BotCommand(
+                            '/bcgps', 'Enviar msg broadcast para grupos'
+                        ),
+                    ],
+                    scope=types.BotCommandScopeChat(
+                        chat_id=user.get('user_id')
+                    ),
+                )
+            except Exception as ex:
+                logger.error(ex)
 
 # Poll sending to channel
+
 
 schedule.every().day.at('08:30').do(send_question)
 schedule.every().day.at('11:30').do(send_question)

@@ -7,7 +7,7 @@ from historicalevents.loggers import logger
 
 
 @bot.message_handler(commands=['fwdoff'])
-def commands_fwdoff(message):
+def cmd_fwdoff(message):
     try:
         user_id = message.from_user.id
         chat_id = message.chat.id
@@ -59,7 +59,7 @@ def commands_fwdoff(message):
 
 
 @bot.message_handler(commands=['fwdon'])
-def commands_fwdon(message):
+def cmd_fwdon(message):
     try:
         user_id = message.from_user.id
         chat_id = message.chat.id
@@ -110,7 +110,7 @@ def commands_fwdon(message):
 
 
 @bot.message_handler(commands=['settopic'])
-def commands_settopic(message):
+def cmd_settopic(message):
     try:
         user_id = message.from_user.id
         chat_id = message.chat.id
@@ -154,7 +154,7 @@ def commands_settopic(message):
 
 
 @bot.message_handler(commands=['unsettopic'])
-def commands_unsettopic(message):
+def cmd_unsettopic(message):
     try:
         user_id = message.from_user.id
         chat_id = message.chat.id

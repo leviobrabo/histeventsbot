@@ -98,7 +98,7 @@ historicals = [
 
 
 @bot.message_handler(commands=['historicalphotos'])
-def historical_photos(message):
+def cmd_photo_hist(message):
     try:
         historical = random.choice(historicals)
 

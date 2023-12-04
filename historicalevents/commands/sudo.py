@@ -7,13 +7,11 @@ from historicalevents.config import *
 from historicalevents.database.db import *
 from historicalevents.loggers import logger
 
-bot.message_handler(commands=['add_sudo'])
-
 
 bot.message_handler(commands=['add_sudo'])
 
 
-def add_sudo(message):
+def cmd_add_sudo(message):
     try:
         if message.chat.type == 'private':
             if message.from_user.id == OWNER:
@@ -68,7 +66,7 @@ def add_sudo(message):
 
 # rem_sudo
 @bot.message_handler(commands=['rem_sudo'])
-def unsudo_command(message):
+def cmd_rem_sudo(message):
     try:
         if message.chat.type == 'private':
             if message.from_user.id == OWNER:
@@ -121,8 +119,8 @@ def unsudo_command(message):
 
 
 # groups
-@bot.message_handler(commands=['grupos'])
-def grupos(message):
+@bot.message_handler(commands=['groups'])
+def cmd_group(message):
     if message.from_user.id != OWNER:
         if message.chat.type != 'private':
             return
@@ -196,7 +194,7 @@ def grupos(message):
 
 # stats
 @bot.message_handler(commands=['stats'])
-def stats(message):
+def cmd_stats(message):
     try:
         count_users = sum(1 for _ in get_all_users())
         count_groups = sum(1 for _ in get_all_chats())
@@ -210,7 +208,7 @@ def stats(message):
 # broadcast
 
 
-@bot.message_handler(commands=['broadcast'])
+@bot.message_handler(commands=['bcusers'])
 def handle_broadcast_pv(message):
     try:
         user_id = message.from_user.id
@@ -311,8 +309,8 @@ def handle_broadcast_pv(message):
 
 
 # sendgp
-@bot.message_handler(commands=['bc'])
-def handle_broadcast_chat(message):
+@bot.message_handler(commands=['bcgps'])
+def cmd_broadcast_chat(message):
     try:
         user_id = message.from_user.id
         if message.from_user.id != OWNER:
@@ -414,7 +412,7 @@ def handle_broadcast_chat(message):
 # devs
 
 @bot.message_handler(commands=['devs'])
-def list_devs(message):
+def cmd_list_devs(message):
     if message.chat.type != 'private':
         return
     user_id = message.from_user.id
