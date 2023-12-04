@@ -56,14 +56,14 @@ def set_my_configs():
     try:
         bot.set_my_commands(
             [
-                types.BotCommand('/start', 'Iniciar'),
-                types.BotCommand('/fotoshist', 'Fotos de fatos históricos 🙂'),
-                types.BotCommand('/help', 'Ajuda'),
+                types.BotCommand('/start', 'Start'),
+                types.BotCommand('/fotoshist', 'Historical facts photos 🙂'),
+                types.BotCommand('/help', 'Help'),
                 types.BotCommand(
-                    '/sendon', 'Receberá às 8 horas a mensagem diária'
+                    '/sendon', 'You will receive the daily message at 8 AM'
                 ),
                 types.BotCommand(
-                    '/sendoff', 'Não receberá às 8 horas a mensagem diária'
+                    '/sendoff', 'You will not receive the daily message at 8 AM'
                 ),
             ],
             scope=types.BotCommandScopeAllPrivateChats(),
@@ -74,7 +74,7 @@ def set_my_configs():
     try:
         bot.set_my_commands(
             [
-                types.BotCommand('/fotoshist', 'Fotos de fatos históricos 🙂'),
+                types.BotCommand('/fotoshist', 'Historical facts photos 🙂'),
             ],
             scope=types.BotCommandScopeAllGroupChats(),
         )
@@ -86,16 +86,16 @@ def set_my_configs():
             [
                 types.BotCommand(
                     '/settopic',
-                    'definir um chat como tópico para receber as mensagens diárias',
+                    'Set a chat as a topic to receive daily messages',
                 ),
                 types.BotCommand(
                     '/unsettopic',
-                    'remove um chat como tópico para receber as mensagens diárias (retorna para o General)',
+                    'Remove a chat as a topic to receive daily messages (returns to General)',
                 ),
-                types.BotCommand('/fotoshist', 'Fotos de fatos históricos 🙂'),
-                types.BotCommand('/fwdon', 'ativa o encaminhamento no grupo'),
+                types.BotCommand('/fotoshist', 'Historical facts photos 🙂'),
+                types.BotCommand('/fwdon', 'Enable forwarding in the group'),
                 types.BotCommand(
-                    '/fwdoff', 'desativa o encaminhamento no grupo'
+                    '/fwdoff', 'Disable forwarding in the group'
                 ),
             ],
             scope=types.BotCommandScopeAllChatAdministrators(),
@@ -109,20 +109,20 @@ def set_my_configs():
             try:
                 bot.set_my_commands(
                     [
-                        types.BotCommand('/sys', 'Uso do servidor'),
-                        types.BotCommand('/sudo', 'Elevar usuário'),
-                        types.BotCommand('/ban', 'Banir usuário do bot'),
+                        types.BotCommand('/sys', 'Server usage'),
+                        types.BotCommand('/sudo', 'Elevate user'),
+                        types.BotCommand('/ban', 'Ban user from the bot'),
                         types.BotCommand(
-                            '/sudolist', 'Lista de usuários sudo'
+                            '/sudolist', 'List of sudo users'
                         ),
                         types.BotCommand(
-                            '/banneds', 'Lista de usuários banidos'
+                            '/banneds', 'List of banned users'
                         ),
                         types.BotCommand(
-                            '/bcusers', 'Enviar msg broadcast para usuários'
+                            '/bcusers', 'Send broadcast message to users'
                         ),
                         types.BotCommand(
-                            '/bcgps', 'Enviar msg broadcast para grupos'
+                            '/bcgps', 'Send broadcast message to groups'
                         ),
                     ],
                     scope=types.BotCommandScopeChat(
@@ -279,7 +279,7 @@ def callback_handler(call):
                 '↩️ Back', callback_data='menu_start'
             )
             markup.add(back_to_home)
-            msg_text = 'how to use the bot'
+            msg_text = 'how to use the bot (Under development)'
             photo = 'https://i.imgur.com/8BCiwvz.png'
             bot.edit_message_media(
                 chat_id=call.message.chat.id,
@@ -296,16 +296,43 @@ def callback_handler(call):
                 '↩️ Back', callback_data='menu_start'
             )
             markup.add(back_to_home)
-            msg_text = 'Your account'
-            photo = 'https://i.imgur.com/8BCiwvz.png'
-            bot.edit_message_media(
-                chat_id=call.message.chat.id,
-                message_id=call.message.message_id,
-                media=types.InputMediaPhoto(
-                    media=photo, caption=msg_text, parse_mode='HTML'
-                ),
-                reply_markup=markup,
-            )
+
+            user_info = search_user(user_id)
+            if user_info:
+                if 'hits' not in user_info:
+                    user_info['hits'] = 0
+                if 'questions' not in user_info:
+                    user_info['questions'] = 0
+                msg_text = f'<b>Your account</b>\n\n'
+                msg_text += f'<b>Name:</b> {user_info["first_name"]}\n'
+                if user_info.get('username'):
+                    msg_text += f'<b>Username:</b> @{user_info["username"]}\n'
+                msg_text += f'<b>Sudo:</b> {"Yes" if user_info["sudo"] == "true" else "No"}\n'
+                msg_text += f'<b>Receives messages in private chat:</b>  {"Yes" if user_info["msg_private"] == "true" else "No"}\n'
+
+                msg_text += (
+                    f'<b>Correct Answers:</b> <code>{user_info["hits"]}</code>\n'
+                )
+                msg_text += (
+                    f'<b>Questions:</b> <code>{user_info["questions"]}</code>\n'
+                )
+
+                if user_info['questions'] > 0:
+                    percentage = (
+                        user_info['hits'] / user_info['questions']
+                    ) * 100
+                    msg_text += f'<b>Percentage of correct answers per question:</b> <code>{percentage:.2f}%</code>\n'
+                else:
+                    msg_text += f'Percentage of correct answers per question: <code>0%</code>\n'
+                photo = 'https://i.imgur.com/j3H3wvJ.png'
+                bot.edit_message_media(
+                    chat_id=call.message.chat.id,
+                    message_id=call.message.message_id,
+                    media=types.InputMediaPhoto(
+                        media=photo, caption=msg_text, parse_mode='HTML'
+                    ),
+                    reply_markup=markup,
+                )
         elif call.data.startswith('commands'):
             user_id = call.from_user.id
             markup = types.InlineKeyboardMarkup()
@@ -314,16 +341,16 @@ def callback_handler(call):
             )
             markup.add(back_to_home)
             msg_text = (
-                '<b>Command list</b>\n\n'
-                '/fotoshist - Photos of historical facts 🙂\n'
-                '/sendon - Receive the daily message at 8 am\n'
-                '/sendoff - Do not receive the daily message at 8 am\n'
+                '<b>List of commands</b>\n\n'
+                '/fotoshist - Historical facts photos 🙂\n'
+                '/sendon - You will receive the daily message at 8 AM\n'
+                '/sendoff - You will not receive the daily message at 8 AM\n'
                 '/fwdoff - Disable forwarding in the group\n'
                 '/fwdon - Enable forwarding in the group\n'
                 '/settopic - Set a chat as a topic to receive daily messages\n'
-                '/cleartopic - Remove a chat as a topic to receive daily messages (returns to General)\n'
+                '/unsettpoic - Remove a chat as a topic to receive daily messages (returns to General)\n'
             )
-            photo = 'https://i.imgur.com/8BCiwvz.png'
+            photo = 'https://i.imgur.com/j3H3wvJ.png'
             bot.edit_message_media(
                 chat_id=call.message.chat.id,
                 message_id=call.message.message_id,
@@ -341,24 +368,21 @@ def polling_thread():
     logger.info('-' * 50)
     logger.success('Start polling...')
     logger.info('-' * 50)
-    bot.infinity_polling(allowed_updates=util.update_types, skip_pending=True)
+    bot.polling(allowed_updates=util.update_types)
 
 
 def schedule_thread():
     while True:
         schedule.run_pending()
-
         sleep(1)
 
 
 polling_thread = threading.Thread(target=polling_thread)
 schedule_thread = threading.Thread(target=schedule_thread)
 
-polling_thread.start()
-schedule_thread.start()
-
 try:
-    polling_thread.join()
-    schedule_thread.join()
+    set_my_configs()
+    polling_thread.start()
+    schedule_thread.start()
 except Exception as e:
     pass

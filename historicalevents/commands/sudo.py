@@ -209,7 +209,7 @@ def cmd_stats(message):
 
 
 @bot.message_handler(commands=['bcusers'])
-def handle_broadcast_pv(message):
+def cmd_broadcast_pv(message):
     try:
         user_id = message.from_user.id
         if message.from_user.id != OWNER:
@@ -440,7 +440,7 @@ def cmd_list_devs(message):
 
 
 @bot.message_handler(commands=['dev'])
-def commands_sudo(message):
+def cmd_sudo(message):
     try:
         if message.chat.type != 'private':
             return
