@@ -361,6 +361,37 @@ def callback_handler(call):
                 ),
                 reply_markup=markup,
             )
+        elif call.data.startswith('menu_help'):
+            if call.message.chat.type != 'private':
+                return
+            user_id = call.message.from_user.id
+            user = search_user(user_id)
+
+            text = "Hello! I'm a bot programmed to send historical facts every day at predetermined times, starting at 8 am. \n\nMoreover, I have amazing commands that can be useful for you. Feel free to interact with me and discover more about the world around us! \n\n<b>Just click on one of them:</b>"
+
+            markup = types.InlineKeyboardMarkup()
+            commands = types.InlineKeyboardButton(
+                'List of commands', callback_data='commands'
+            )
+            support = types.InlineKeyboardButton(
+                'Support', url='https://t.me/updatehist'
+            )
+            donate = types.InlineKeyboardButton(
+                '💰 Donate', url='https://t.me/updatehist'
+            )
+
+            markup.add(commands)
+            markup.add(support, donate)
+
+            photo = 'https://i.imgur.com/j3H3wvJ.png'
+            bot.edit_message_media(
+                chat_id=call.message.chat.id,
+                message_id=call.message.message_id,
+                media=types.InputMediaPhoto(
+                    media=photo, caption=text, parse_mode='HTML'
+                ),
+                reply_markup=markup,
+            )
 
     except Exception as e:
         logger.error(e)
