@@ -1,6 +1,5 @@
 import threading
 from time import sleep
-import pytz
 
 import schedule
 from telebot import util
@@ -137,18 +136,17 @@ def set_my_configs():
 
 # Poll sending to channel
 
-sp_timezone = pytz.timezone('America/Sao_Paulo')
-schedule.every().day.at('08:30').astimezone(sp_timezone).do(send_question)
-schedule.every().day.at('11:56').astimezone(sp_timezone).do(send_question)
-schedule.every().day.at('14:00').astimezone(sp_timezone).do(send_question)
-schedule.every().day.at('18:30').astimezone(sp_timezone).do(send_question)
+schedule.every().day.at('08:30').do(send_question)
+schedule.every().day.at('11:56').do(send_question)
+schedule.every().day.at('14:00').do(send_question)
+schedule.every().day.at('18:30').do(send_question)
 
 # Poll sending to chats
 
-schedule.every().day.at('10:30').astimezone(sp_timezone).do(send_question_chat)
-schedule.every().day.at('14:30').astimezone(sp_timezone).do(send_question_chat)
-schedule.every().day.at('16:30').astimezone(sp_timezone).do(send_question_chat)
-schedule.every().day.at('21:30').astimezone(sp_timezone).do(send_question_chat)
+schedule.every().day.at('10:30').do(send_question_chat)
+schedule.every().day.at('14:30').do(send_question_chat)
+schedule.every().day.at('16:30').do(send_question_chat)
+schedule.every().day.at('21:30').do(send_question_chat)
 
 # Remove polls from the database
 
@@ -156,47 +154,47 @@ schedule.every().day.at('21:30').astimezone(sp_timezone).do(send_question_chat)
 
 # Sending historical events in chats
 
-schedule.every().day.at('08:00').astimezone(sp_timezone).do(hist_chat_job)
+schedule.every().day.at('08:00').do(hist_chat_job)
 
 # Sending historical events to users
 
-schedule.every().day.at('08:30').astimezone(sp_timezone).do(hist_user_job)
+schedule.every().day.at('08:30').do(hist_user_job)
 
 # Sending historical events to the channel
 
-schedule.every().day.at('05:00').astimezone(sp_timezone).do(hist_channel)
+schedule.every().day.at('05:00').do(hist_channel)
 
 # Sending deaths of the day to the channel
 
-schedule.every().day.at('15:30').astimezone(sp_timezone).do(hist_channel_death)
+schedule.every().day.at('15:30').do(hist_channel_death)
 
 # Sending births of the day to the channel
 
-schedule.every().day.at('01:00').astimezone(sp_timezone).do(hist_channel_birth)
+schedule.every().day.at('01:00').do(hist_channel_birth)
 
 # Sending holidays of the day to the channel
 
-schedule.every().day.at('00:00').astimezone(sp_timezone).do(hist_channel_holiday)
+schedule.every().day.at('00:00').do(hist_channel_holiday)
 
 # Sending historical photos to the group
 
-schedule.every().day.at('15:00').astimezone(sp_timezone).do(hist_image_chat_job)
+schedule.every().day.at('15:00').do(hist_image_chat_job)
 
 # Sending historical photos to the channel
 
-schedule.every().day.at('17:00').astimezone(sp_timezone).do(hist_channel_imgs)
+schedule.every().day.at('17:00').do(hist_channel_imgs)
 
 # Sending curiosities to the channel
 
-schedule.every().day.at('10:00').astimezone(sp_timezone).do(hist_channel_curiosity)
+schedule.every().day.at('10:00').do(hist_channel_curiosity)
 
 # Sending quotes to the channel
 
-schedule.every().day.at('21:30').astimezone(sp_timezone).do(hist_channel_quote)
+schedule.every().day.at('21:30').do(hist_channel_quote)
 
 # Sending presidents to the channel
 
-schedule.every().day.at('20:00').astimezone(sp_timezone).do(send_president_photo)
+schedule.every().day.at('20:00').do(send_president_photo)
 
 
 @bot.callback_query_handler(func=lambda call: True)
