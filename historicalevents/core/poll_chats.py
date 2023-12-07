@@ -53,7 +53,7 @@ def send_question_chat():
         current_time = today.time()
 
         with open(
-            './historicalevents/data/questions.json', 'r', encoding='utf-8'
+            './historicalevents/data/question.json', 'r', encoding='utf-8'
         ) as file:
             json_events = json.load(file)
 
