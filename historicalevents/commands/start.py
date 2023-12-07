@@ -39,7 +39,7 @@ def cmd_start(message):
             '💰 Donations', callback_data='donate'
         )
         channel_ofc = types.InlineKeyboardButton(
-            'Official Channel 🇧🇷', url='https://t.me/today_in_historys'
+            'Official Channel 🇺🇸', url='https://t.me/today_in_historys'
         )
         how_to_use = types.InlineKeyboardButton(
             '⚠️ How to use the bot', callback_data='how_to_use'
