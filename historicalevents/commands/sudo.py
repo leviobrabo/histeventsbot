@@ -334,19 +334,27 @@ def cmd_broadcast_chat(message):
             for chat in ulist:
                 try:
                     if message.text.startswith('/bcgps'):
-                        bot.forward_message(
-                            chat['chat_id'],
-                            reply_msg.chat.id,
-                            reply_msg.message_id,
-                        )
-                    elif message.text.startswith('/bcgps'):
-                        bot.send_message(chat['chat_id'], reply_msg.text)
-                    success_br += 1
+                        if reply_msg.text:
+                            bot.send_message(chat['chat_id'], reply_msg.text)
+                        elif reply_msg.document:
+                            bot.send_document(chat['chat_id'], reply_msg.document.file_id)
+                        elif reply_msg.photo:
+                            bot.send_photo(chat['chat_id'], reply_msg.photo[-1].file_id)
+                        elif reply_msg.video:
+                            bot.send_video(chat['chat_id'], reply_msg.video.file_id)
+                        else:
+                            bot.forward_message(
+                                chat['chat_id'],
+                                reply_msg.chat.id,
+                                reply_msg.message_id,
+                            )
+                        success_br += 1
                 except telebot.apihelper.ApiException as err:
                     if err.result.status_code == 403:
                         block_num += 1
                     else:
                         no_success += 1
+
 
             bot.send_message(
                 message.chat.id,
