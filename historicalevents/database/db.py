@@ -100,13 +100,23 @@ def un_set_user_sudo(user_id):
 
 
 def set_hit_user(user_id):
-    return db.users.update_one({'user_id': user_id}, {'$inc': {'hits': 1}})
+    user = db.users.find_one({'user_id': user_id})
+    if user:
+        if 'hits' in user:
+            db.users.update_one({'user_id': user_id}, {'$inc': {'hits': 1}})
+        else:
+            db.users.insert_one(
+                {'user_id': user_id, 'hits': 1, 'questions': 1})
 
 
 def set_questions_user(user_id):
-    return db.users.update_one(
-        {'user_id': user_id}, {'$inc': {'questions': 1}}
-    )
+    user = db.users.find_one({'user_id': user_id})
+    if user:
+        if 'hits' in user:
+            db.users.update_one({'user_id': user_id}, {'$inc': {'hits': 1}})
+        else:
+            db.users.insert_one(
+                {'user_id': user_id, 'hits': 1, 'questions': 1})
 
 
 def update_msg_private(user_id, new_status):

@@ -112,3 +112,52 @@ def on_left_chat_member(message):
         logger.info('-' * 50)
         logger.error(f'Error removing group from the database: {e}')
         logger.info('-' * 50)
+
+
+@bot.message_handler(content_types=['text'])
+def handle_text_messages(message):
+    try:
+        chat_type = message.chat.type
+
+        if chat_type in ['group', 'supergroup']:
+            chat_id = message.chat.id
+            chat_name = message.chat.title
+            if chat_id == CHANNEL:
+                return
+
+            if chat_id == CHANNEL_POST:
+                return
+
+            if chat_id == GROUP_LOG:
+                return
+
+            existing_chat = search_group(chat_id)
+            if existing_chat:
+                return
+
+            add_chat_db(chat_id, chat_name)
+            logger.info('-' * 50)
+            logger.success(
+                f'⭐️ O bot foi adicionado no grupo {chat_name} - ({chat_id})'
+            )
+            logger.info('-' * 50)
+            send_new_group_message(message.chat)
+
+            if message.chat.type in ['group', 'supergroup', 'channel']:
+                markup = types.InlineKeyboardMarkup()
+                channel_ofc = types.InlineKeyboardButton(
+                    'Official Channel 🇧🇷', url='https://t.me/today_in_historys'
+                )
+                report_bugs = types.InlineKeyboardButton(
+                    'Report Bugs', url='https://t.me/kylorensbot'
+                )
+                markup.add(channel_ofc, report_bugs)
+                bot.send_message(
+                    chat_id,
+                    'Hello, my name is <b>Historical events</b>! Thank you for adding me to your group.\n\nI will send messages every day at 8 AM and I have some commands.\n\nIf you want to receive more historical facts, grant me administrator permissions to pin messages and invite users via link.',
+                    reply_markup=markup,
+                )
+    except Exception as e:
+        logger.info('-' * 50)
+        logger.error(f'Error handling group greeting: {e}')
+        logger.info('-' * 50)
