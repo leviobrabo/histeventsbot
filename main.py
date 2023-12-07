@@ -383,7 +383,7 @@ polling_thread = threading.Thread(target=polling_thread)
 schedule_thread = threading.Thread(target=schedule_thread)
 
 try:
-    set_my_configs()
+    # set_my_configs()
     polling_thread.start()
     schedule_thread.start()
 except Exception as e:
