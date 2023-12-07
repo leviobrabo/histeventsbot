@@ -57,7 +57,8 @@ def set_my_configs():
         bot.set_my_commands(
             [
                 types.BotCommand('/start', 'Start'),
-                types.BotCommand('/fotoshist', 'Historical facts photos 🙂'),
+                types.BotCommand('/historicalphotos',
+                                 'Historical facts photos 🙂'),
                 types.BotCommand('/help', 'Help'),
                 types.BotCommand(
                     '/sendon', 'You will receive the daily message at 8 AM'
@@ -74,7 +75,8 @@ def set_my_configs():
     try:
         bot.set_my_commands(
             [
-                types.BotCommand('/fotoshist', 'Historical facts photos 🙂'),
+                types.BotCommand('/historicalphotos',
+                                 'Historical facts photos 🙂'),
             ],
             scope=types.BotCommandScopeAllGroupChats(),
         )
