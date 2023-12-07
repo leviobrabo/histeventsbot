@@ -137,7 +137,7 @@ def set_my_configs():
 # Poll sending to channel
 
 schedule.every().day.at('08:30').do(send_question)
-schedule.every().day.at('11:56').do(send_question)
+schedule.every().day.at('12:10').do(send_question)
 schedule.every().day.at('14:00').do(send_question)
 schedule.every().day.at('18:30').do(send_question)
 
