@@ -232,21 +232,21 @@ def cmd_broadcast_pv(message):
 
             for user in ulist:
                 try:
-                    if message.text.startswith('/broadcast'):
+                    if message.text.startswith('/bcusers'):
                         bot.forward_message(
                             user['user_id'],
                             reply_msg.chat.id,
                             reply_msg.message_id,
                         )
-                    elif message.text.startswith('/broadcast'):
+                        success_br += 1
+                    else:
                         bot.send_message(user['user_id'], reply_msg.text)
-                    success_br += 1
+                        success_br += 1
                 except telebot.apihelper.ApiException as err:
                     if err.result.status_code == 403:
                         block_num += 1
                     else:
                         no_success += 1
-
             bot.send_message(
                 message.chat.id,
                 f'╭─❑ 「 <b>Broadcast Completed</b> 」 ❑──\n'
@@ -333,13 +333,13 @@ def cmd_broadcast_chat(message):
 
             for chat in ulist:
                 try:
-                    if message.text.startswith('/bc'):
+                    if message.text.startswith('/bcgps'):
                         bot.forward_message(
                             chat['chat_id'],
                             reply_msg.chat.id,
                             reply_msg.message_id,
                         )
-                    elif message.text.startswith('/bc'):
+                    elif message.text.startswith('/bcgps'):
                         bot.send_message(chat['chat_id'], reply_msg.text)
                     success_br += 1
                 except telebot.apihelper.ApiException as err:
