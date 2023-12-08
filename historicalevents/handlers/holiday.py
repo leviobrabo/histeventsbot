@@ -18,7 +18,7 @@ def get_holidays_of_the_day(CHANNEL):
         month = today.month
 
         response = requests.get(
-            f'https://pt.wikipedia.org/api/rest_v1/feed/onthisday/holidays/{month}/{day}',
+            f'https://en.wikipedia.org/api/rest_v1/feed/onthisday/holidays/{month}/{day}',
             headers={
                 'accept': 'application/json; charset=utf-8; profile="https://www.mediawiki.org/wiki/Specs/onthisday/0.3.3"'
             },
