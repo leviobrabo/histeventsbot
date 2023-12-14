@@ -32,6 +32,7 @@ from historicalevents.core.poll_chats import *
 from historicalevents.database.db import *
 from historicalevents.handlers.birth_of_day import *
 from historicalevents.handlers.curiosity_channel import *
+from historicalevents.handlers.count_user_channel import *
 from historicalevents.handlers.death_of_day import *
 from historicalevents.handlers.event_hist_channel import *
 from historicalevents.handlers.event_hist_chats import *
@@ -138,7 +139,7 @@ def set_my_configs():
 
 # Number of users on the channel
 schedule.every(1).days.do(get_current_count)
-schedule.every().day.at('12:59').do(get_current_count)
+schedule.every().day.at('13:08').do(get_current_count)
 
 
 # Poll sending to channel
