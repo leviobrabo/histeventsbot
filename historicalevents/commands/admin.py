@@ -53,9 +53,8 @@ def cmd_fwdoff(message):
         )
 
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error disabling chat forwarding: {str(e)}')
-        logger.info('-' * 50)
 
 
 @bot.message_handler(commands=['fwdon'])
@@ -104,9 +103,8 @@ def cmd_fwdon(message):
             f'<b>#{BOT_USERNAME} #Fwdon</b>\n\<b>Chat</b>: {chat_name}\n<b>ID:</b> <code>{chat_id}</code>',
         )
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error enabling chat forwarding: {str(e)}')
-        logger.info('-' * 50)
 
 
 @bot.message_handler(commands=['settopic'])
@@ -145,9 +143,8 @@ def cmd_settopic(message):
             )
 
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error setting the topic: {str(e)}')
-        logger.info('-' * 50)
 
 
 # unsettopic
@@ -177,9 +174,8 @@ def cmd_unsettopic(message):
             )
 
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error removing the topic: {str(e)}')
-        logger.info('-' * 50)
 
 
 def send_new_group_message(chat):

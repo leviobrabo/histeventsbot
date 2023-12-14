@@ -46,29 +46,28 @@ def get_holidays_of_the_day(CHANNEL):
 
                 bot.send_message(CHANNEL, message)
             else:
-                logger.info('-' * 50)
+
                 logger.info(
                     'There is no information about worldwide holidays for the current day.'
                 )
-                logger.info('-' * 50)
+
         else:
-            logger.info('-' * 50)
-            logger.warning('Error obtaining information:',
-                           response.status_code)
-            logger.info('-' * 50)
+
+            logger.warning(
+                'Error obtaining information:', response.status_code
+            )
+
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error('Error obtaining information:', str(e))
-        logger.info('-' * 50)
 
 
 def hist_channel_holiday():
     try:
         get_holidays_of_the_day(CHANNEL)
-        logger.info('-' * 50)
+
         logger.success(f'Holidays sent to channel {CHANNEL}')
-        logger.info('-' * 50)
+
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error('Error sending holidays job:', str(e))
-        logger.info('-' * 50)

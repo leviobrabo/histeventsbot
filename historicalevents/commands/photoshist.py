@@ -23,7 +23,7 @@ historicals = [
         'image': 'https://i.imgur.com/eIZC0yH.png',
     },
     {
-        'title': 'Michelangelo\'s David statue covered by a brick protection to prevent damage from bombings during World War II',
+        'title': "Michelangelo's David statue covered by a brick protection to prevent damage from bombings during World War II",
         'image': 'https://i.imgur.com/PgMKq6S.png',
     },
     {
@@ -31,7 +31,7 @@ historicals = [
         'image': 'https://i.imgur.com/E3rAaKZ.png',
     },
     {
-        'title': 'Historic photo of Princess Diana shaking hands with an AIDS patient without gloves in 1991, at a time when prejudice and ignorance still influenced notions about the disease\'s transmission',
+        'title': "Historic photo of Princess Diana shaking hands with an AIDS patient without gloves in 1991, at a time when prejudice and ignorance still influenced notions about the disease's transmission",
         'image': 'https://i.imgur.com/LdsE0TS.png',
     },
     {
@@ -47,7 +47,7 @@ historicals = [
         'image': 'https://i.imgur.com/nK0ydXb.png',
     },
     {
-        'title': 'Las Vegas police officers facing Mike Tyson moments after the boxer bit off part of his opponent, Evander Holyfield\'s ear, in 1996',
+        'title': "Las Vegas police officers facing Mike Tyson moments after the boxer bit off part of his opponent, Evander Holyfield's ear, in 1996",
         'image': 'https://i.imgur.com/Dw075SY.png',
     },
     {
@@ -110,6 +110,5 @@ def cmd_photo_hist(message):
             reply_to_message_id=message.message_id,
         )
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error sending historical image: {e}')
-        logger.info('-' * 50)

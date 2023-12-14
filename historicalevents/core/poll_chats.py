@@ -38,13 +38,12 @@ def send_poll_chat(
         poll_id = sent_poll.poll.id
 
         add_poll_db(chat_id, poll_id, correct_option_id, current_date)
-        logger.info('-' * 50)
+
         logger.success(f'Sent question to chat {chat_id}')
-        logger.info('-' * 50)
+
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error sending the question: {e}')
-        logger.info('-' * 50)
 
 
 def send_question_chat():
@@ -115,9 +114,8 @@ def send_question_chat():
                     )
 
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error sending the question: {e}')
-        logger.info('-' * 50)
 
 
 @bot.poll_answer_handler()
@@ -143,9 +141,8 @@ def handle_poll_answer(poll_answer):
             set_questions_user(user_id)
 
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error processing poll answer: {e}')
-        logger.info('-' * 50)
 
 
 def remove_all_poll():
@@ -153,6 +150,5 @@ def remove_all_poll():
         logger.success('Removed polls from the database!')
         remove_all_poll_db()
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error processing poll answer: {e}')
-        logger.info('-' * 50)

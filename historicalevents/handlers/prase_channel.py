@@ -29,22 +29,20 @@ def get_quote(CHANNEL):
                 message = f'<b>💡 Quote for reflection</b>\n\n"<i>{quote}"</i> - <b>{author}</b>\n\n💬 Did you know? Follow @today_in_historys.'
                 bot.send_message(CHANNEL, message)
             else:
-                logger.info('-' * 50)
+
                 logger.info('There is no information for today.')
-                logger.info('-' * 50)
+
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error('Error retrieving information:', str(e))
-        logger.info('-' * 50)
 
 
 def hist_channel_quote():
     try:
         get_quote(CHANNEL)
-        logger.info('-' * 50)
+
         logger.success(f'Quote sent to channel {CHANNEL}')
-        logger.info('-' * 50)
+
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error('Error sending quote:', str(e))
-        logger.info('-' * 50)

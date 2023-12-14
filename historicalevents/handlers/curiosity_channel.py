@@ -33,22 +33,20 @@ def get_curiosity(CHANNEL):
                 message = f'<b>Historical Curiosities 📜</b>\n\n{info}\n\n💬 Did you know? Follow @today_in_historys.'
                 bot.send_message(CHANNEL, message)
             else:
-                logger.info('-' * 50)
+
                 logger.info('No information available for today.')
-                logger.info('-' * 50)
+
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error('Error fetching information:', str(e))
-        logger.info('-' * 50)
 
 
 def hist_channel_curiosity():
     try:
         get_curiosity(CHANNEL)
-        logger.info('-' * 50)
+
         logger.success(f'Curiosity sent to the channel {CHANNEL}')
-        logger.info('-' * 50)
+
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error('Error sending curiosity job:', str(e))
-        logger.info('-' * 50)

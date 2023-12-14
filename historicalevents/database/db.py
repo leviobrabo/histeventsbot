@@ -4,18 +4,19 @@ from historicalevents.config import MONGO_CON
 from historicalevents.loggers import logger
 
 try:
-    logger.info('-' * 50)
+
     logger.info('ℹ️ INITIATING CONNECTION WITH MONGODB')
-    logger.info('-' * 50)
+
     client = MongoClient(MONGO_CON)
     db = client.historicalevents
     logger.success('✅ Connection to MongoDB established successfully!')
-    logger.info('-' * 50)
+
 except Exception as e:
     logger.error(f'❗️ Error connecting to MongoDB: {e}')
 
 
 # User related operations
+
 
 def add_user_db(message):
     first_name = message.from_user.first_name
@@ -106,7 +107,8 @@ def set_hit_user(user_id):
             db.users.update_one({'user_id': user_id}, {'$inc': {'hits': 1}})
         else:
             db.users.insert_one(
-                {'user_id': user_id, 'hits': 1, 'questions': 1})
+                {'user_id': user_id, 'hits': 1, 'questions': 1}
+            )
 
 
 def set_questions_user(user_id):
@@ -116,7 +118,8 @@ def set_questions_user(user_id):
             db.users.update_one({'user_id': user_id}, {'$inc': {'hits': 1}})
         else:
             db.users.insert_one(
-                {'user_id': user_id, 'hits': 1, 'questions': 1})
+                {'user_id': user_id, 'hits': 1, 'questions': 1}
+            )
 
 
 def update_msg_private(user_id, new_status):
@@ -127,6 +130,7 @@ def update_msg_private(user_id, new_status):
 
 
 # Operations related to chats
+
 
 def add_chat_db(chat_id, chat_name):
     return db.chats.insert_one(
@@ -172,6 +176,7 @@ def update_thread_id(chat_id, new_thread_id):
 
 # Operations related to polls
 
+
 def add_poll_db(chat_id, poll_id, correct_option_id, date):
     return db.poll.insert_one(
         {
@@ -193,6 +198,7 @@ def search_poll(poll_id):
 
 # Operations related to sending presidents
 
+
 def add_presidents_db(id, date):
     return db.presidentes.insert_one(
         {
@@ -211,6 +217,7 @@ def search_date_presidente(date):
 
 
 # Operations related to user counter
+
 
 def count_user_channel(count, date):
     return db.counter.insert_one({'count': count, 'date': date})

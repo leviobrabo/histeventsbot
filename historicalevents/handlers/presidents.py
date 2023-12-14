@@ -47,21 +47,20 @@ def send_president_photo():
 
                     send_info_through_channel(next_president)
                 else:
-                    logger.info('-' * 50)
+
                     logger.error('No more presidents to send.')
-                    logger.info('-' * 50)
+
             else:
-                logger.info('-' * 50)
+
                 logger.info(
                     "It's not time yet to send information about the next president."
                 )
-                logger.info('-' * 50)
+
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(
             f'An error occurred while sending president information: {str(e)}'
         )
-        logger.info('-' * 50)
 
 
 def send_info_through_channel(president_info):
@@ -84,12 +83,11 @@ def send_info_through_channel(president_info):
             f'💬 Did you know? Follow @today_in_historys.'
         )
 
-        logger.info('-' * 50)
         logger.success('President sending completed successfully!')
-        logger.info('-' * 50)
-        bot.send_photo(CHANNEL, photo=photo,
-                       caption=caption, parse_mode='HTML')
+
+        bot.send_photo(
+            CHANNEL, photo=photo, caption=caption, parse_mode='HTML'
+        )
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error sending president photo: {str(e)}')
-        logger.info('-' * 50)

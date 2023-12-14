@@ -46,20 +46,18 @@ def get_deaths_of_the_day(CHANNEL):
 
                 bot.send_message(CHANNEL, message)
             else:
-                logger.info('-' * 50)
+
                 logger.info(
                     'No information available for deceased individuals for the current day.'
                 )
-                logger.info('-' * 50)
+
         else:
-            logger.info('-' * 50)
+
             logger.warning('Error fetching information:', response.status_code)
-            logger.info('-' * 50)
 
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error('Error sending deaths to the channel:', str(e))
-        logger.info('-' * 50)
 
 
 def hist_channel_death():

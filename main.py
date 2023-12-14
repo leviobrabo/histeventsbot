@@ -5,34 +5,23 @@ import schedule
 from telebot import util
 
 from historicalevents.bot.bot import bot
-from historicalevents.commands.admin import (
-    cmd_fwdoff,
-    cmd_fwdon,
-    cmd_settopic,
-    cmd_unsettopic,
-)
-from historicalevents.commands.photoshist import cmd_photo_hist
+from historicalevents.commands.admin import (cmd_fwdoff, cmd_fwdon,
+                                             cmd_settopic, cmd_unsettopic)
 from historicalevents.commands.help import cmd_help
+from historicalevents.commands.photoshist import cmd_photo_hist
 from historicalevents.commands.send import cmd_sendoff, cmd_sendon
 from historicalevents.commands.start import cmd_start
-from historicalevents.commands.sudo import (
-    cmd_add_sudo,
-    cmd_sudo,
-    cmd_group,
-    cmd_broadcast_chat,
-    cmd_broadcast_pv,
-    cmd_list_devs,
-    cmd_stats,
-    cmd_rem_sudo,
-    cmd_sys,
-)
+from historicalevents.commands.sudo import (cmd_add_sudo, cmd_broadcast_chat,
+                                            cmd_broadcast_pv, cmd_group,
+                                            cmd_list_devs, cmd_rem_sudo,
+                                            cmd_stats, cmd_sudo, cmd_sys)
 from historicalevents.config import *
 from historicalevents.core.poll_channel import *
 from historicalevents.core.poll_chats import *
 from historicalevents.database.db import *
 from historicalevents.handlers.birth_of_day import *
-from historicalevents.handlers.curiosity_channel import *
 from historicalevents.handlers.count_user_channel import *
+from historicalevents.handlers.curiosity_channel import *
 from historicalevents.handlers.death_of_day import *
 from historicalevents.handlers.event_hist_channel import *
 from historicalevents.handlers.event_hist_chats import *
@@ -58,14 +47,16 @@ def set_my_configs():
         bot.set_my_commands(
             [
                 types.BotCommand('/start', 'Start'),
-                types.BotCommand('/historicalphotos',
-                                 'Historical facts photos 🙂'),
+                types.BotCommand(
+                    '/historicalphotos', 'Historical facts photos 🙂'
+                ),
                 types.BotCommand('/help', 'Help'),
                 types.BotCommand(
                     '/sendon', 'You will receive the daily message at 8 AM'
                 ),
                 types.BotCommand(
-                    '/sendoff', 'You will not receive the daily message at 8 AM'
+                    '/sendoff',
+                    'You will not receive the daily message at 8 AM',
                 ),
             ],
             scope=types.BotCommandScopeAllPrivateChats(),
@@ -76,8 +67,9 @@ def set_my_configs():
     try:
         bot.set_my_commands(
             [
-                types.BotCommand('/historicalphotos',
-                                 'Historical facts photos 🙂'),
+                types.BotCommand(
+                    '/historicalphotos', 'Historical facts photos 🙂'
+                ),
             ],
             scope=types.BotCommandScopeAllGroupChats(),
         )
@@ -97,9 +89,7 @@ def set_my_configs():
                 ),
                 types.BotCommand('/fotoshist', 'Historical facts photos 🙂'),
                 types.BotCommand('/fwdon', 'Enable forwarding in the group'),
-                types.BotCommand(
-                    '/fwdoff', 'Disable forwarding in the group'
-                ),
+                types.BotCommand('/fwdoff', 'Disable forwarding in the group'),
             ],
             scope=types.BotCommandScopeAllChatAdministrators(),
         )
@@ -115,12 +105,8 @@ def set_my_configs():
                         types.BotCommand('/sys', 'Server usage'),
                         types.BotCommand('/sudo', 'Elevate user'),
                         types.BotCommand('/ban', 'Ban user from the bot'),
-                        types.BotCommand(
-                            '/sudolist', 'List of sudo users'
-                        ),
-                        types.BotCommand(
-                            '/banneds', 'List of banned users'
-                        ),
+                        types.BotCommand('/sudolist', 'List of sudo users'),
+                        types.BotCommand('/banneds', 'List of banned users'),
                         types.BotCommand(
                             '/bcusers', 'Send broadcast message to users'
                         ),
@@ -134,7 +120,6 @@ def set_my_configs():
                 )
             except Exception as ex:
                 logger.error(ex)
-
 
 
 # Number of users on the channel
@@ -319,12 +304,8 @@ def callback_handler(call):
                 msg_text += f'<b>Sudo:</b> {"Yes" if user_info["sudo"] == "true" else "No"}\n'
                 msg_text += f'<b>Receives messages in private chat:</b>  {"Yes" if user_info["msg_private"] == "true" else "No"}\n'
 
-                msg_text += (
-                    f'<b>Correct Answers:</b> <code>{user_info["hits"]}</code>\n'
-                )
-                msg_text += (
-                    f'<b>Questions:</b> <code>{user_info["questions"]}</code>\n'
-                )
+                msg_text += f'<b>Correct Answers:</b> <code>{user_info["hits"]}</code>\n'
+                msg_text += f'<b>Questions:</b> <code>{user_info["questions"]}</code>\n'
 
                 if user_info['questions'] > 0:
                     percentage = (
@@ -405,9 +386,9 @@ def callback_handler(call):
 
 
 def polling_thread():
-    logger.info('-' * 50)
+
     logger.success('Start polling...')
-    logger.info('-' * 50)
+
     bot.polling(allowed_updates=util.update_types)
 
 

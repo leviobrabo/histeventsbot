@@ -33,7 +33,8 @@ def send_historical_events_group_image(chat_id):
             inline_keyboard = types.InlineKeyboardMarkup()
             inline_keyboard.add(
                 types.InlineKeyboardButton(
-                    text='📢 Official Channel', url='https://t.me/today_in_historys'
+                    text='📢 Official Channel',
+                    url='https://t.me/today_in_historys',
                 )
             )
 
@@ -55,19 +56,18 @@ def send_historical_events_group_image(chat_id):
                     parse_mode='HTML',
                     reply_markup=inline_keyboard,
                 )
-            logger.info('-' * 50)
+
             logger.success(
                 f'Historical event in photo sent successfully to chat ID {chat_id}.'
             )
-            logger.info('-' * 50)
+
         else:
-            logger.info('-' * 50)
+
             logger.info('There are no historical events for the current day.')
-            logger.info('-' * 50)
+
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Failed to send historical event: {e}')
-        logger.info('-' * 50)
 
 
 def hist_image_chat_job():
@@ -79,12 +79,11 @@ def hist_image_chat_job():
                 try:
                     send_historical_events_group_image(chat_id)
                 except Exception as e:
-                    logger.info('-' * 50)
+
                     logger.error(
                         f'Error sending image historical events to group {chat_id}: {str(e)}'
                     )
-                    logger.info('-' * 50)
+
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error('Error sending images to chats:', str(e))
-        logger.info('-' * 50)

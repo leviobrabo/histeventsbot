@@ -38,6 +38,5 @@ def cmd_help(message):
             reply_markup=markup,
         )
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error while sending the help message: {e}')
-        logger.info('-' * 50)

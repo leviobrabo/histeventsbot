@@ -7,7 +7,6 @@ from historicalevents.config import *
 from historicalevents.database.db import *
 from historicalevents.loggers import logger
 
-
 bot.message_handler(commands=['add_sudo'])
 
 
@@ -59,9 +58,8 @@ def cmd_add_sudo(message):
                     )
 
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error adding a sudo user: {e}')
-        logger.info('-' * 50)
 
 
 # rem_sudo
@@ -113,9 +111,8 @@ def cmd_rem_sudo(message):
                     )
 
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error removing a sudo user: {e}')
-        logger.info('-' * 50)
 
 
 # groups
@@ -187,9 +184,8 @@ def cmd_group(message):
             bot.answer_callback_query(callback_query_id=query.id)
 
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error while sending the list of groups: {e}')
-        logger.info('-' * 50)
 
 
 # stats
@@ -201,9 +197,9 @@ def cmd_stats(message):
         user_stats = f' ☆ {count_users} users\n ☆ {count_groups} Groups'
         bot.reply_to(message, f'\n──❑ 「 Bot Stats 」 ❑──\n\n{user_stats}')
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error while sending bot stats: {e}')
-        logger.info('-' * 50)
+
 
 # broadcast
 
@@ -303,9 +299,8 @@ def cmd_broadcast_pv(message):
                 parse_mode='HTML',
             )
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error while broadcasting to users: {e}')
-        logger.info('-' * 50)
 
 
 # sendgp
@@ -337,11 +332,17 @@ def cmd_broadcast_chat(message):
                         if reply_msg.text:
                             bot.send_message(chat['chat_id'], reply_msg.text)
                         elif reply_msg.document:
-                            bot.send_document(chat['chat_id'], reply_msg.document.file_id)
+                            bot.send_document(
+                                chat['chat_id'], reply_msg.document.file_id
+                            )
                         elif reply_msg.photo:
-                            bot.send_photo(chat['chat_id'], reply_msg.photo[-1].file_id)
+                            bot.send_photo(
+                                chat['chat_id'], reply_msg.photo[-1].file_id
+                            )
                         elif reply_msg.video:
-                            bot.send_video(chat['chat_id'], reply_msg.video.file_id)
+                            bot.send_video(
+                                chat['chat_id'], reply_msg.video.file_id
+                            )
                         else:
                             bot.forward_message(
                                 chat['chat_id'],
@@ -354,7 +355,6 @@ def cmd_broadcast_chat(message):
                         block_num += 1
                     else:
                         no_success += 1
-
 
             bot.send_message(
                 message.chat.id,
@@ -412,12 +412,12 @@ def cmd_broadcast_chat(message):
                 parse_mode='HTML',
             )
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error while broadcasting to groups: {e}')
-        logger.info('-' * 50)
 
 
 # devs
+
 
 @bot.message_handler(commands=['devs'])
 def cmd_list_devs(message):
@@ -426,9 +426,7 @@ def cmd_list_devs(message):
     user_id = message.from_user.id
     user_db = search_user(user_id)
     if user_db and user_db.get('sudo') != 'true':
-        bot.reply_to(
-            message, 'This command can only be used by developers!'
-        )
+        bot.reply_to(message, 'This command can only be used by developers!')
         return
 
     try:
@@ -442,9 +440,8 @@ def cmd_list_devs(message):
 
         bot.reply_to(message, devs_list, parse_mode='HTML')
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error while sending the list of devs: {e}')
-        logger.info('-' * 50)
 
 
 @bot.message_handler(commands=['dev'])
@@ -473,9 +470,8 @@ def cmd_sudo(message):
             f'/fwrds - List of groups with forwarding disabled\n',
         )
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error while sending the list of dev commands: {e}')
-        logger.info('-' * 50)
 
 
 @bot.message_handler(commands=['sys'])
@@ -495,6 +491,5 @@ def cmd_sys(message: types.Message):
             f'\n──❑ 「 System Stats 」 ❑──\n\n ☆ CPU usage: {psutil.cpu_percent(4)} %\n ☆ RAM usage: {psutil.virtual_memory()[2]} %',
         )
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error while sending the list of dev commands: {e}')
-        logger.info('-' * 50)

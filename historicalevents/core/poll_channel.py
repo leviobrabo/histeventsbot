@@ -18,13 +18,12 @@ def send_poll(chat_id, question, options, correct_option_id, explanation):
             correct_option_id=correct_option_id,
             explanation=explanation[:200] if explanation else None,
         )
-        logger.info('-' * 50)
+
         logger.success(f'Sent question to chat {chat_id}')
-        logger.info('-' * 50)
+
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error sending the question: {e}')
-        logger.info('-' * 50)
 
 
 def send_question():
@@ -83,6 +82,5 @@ def send_question():
                 events['question4'].get('explanation', ''),
             )
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error(f'Error sending the question: {e}')
-        logger.info('-' * 50)

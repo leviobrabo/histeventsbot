@@ -31,9 +31,8 @@ def cmd_sendon(message):
             bot.reply_to(message, 'Send the command again.')
 
     except Exception as e:
-        logger.info('-' * 50)
+
         print(f'Error activating the receipt of historical events: {str(e)}')
-        logger.info('-' * 50)
 
 
 @bot.message_handler(commands=['sendoff'])
@@ -61,8 +60,5 @@ def cmd_sendoff(message):
             bot.reply_to(message, 'Send the command again.')
 
     except Exception as e:
-        logger.info('-' * 50)
-        print(
-            f'Error deactivating the receipt of historical events: {str(e)}'
-        )
-        logger.info('-' * 50)
+
+        print(f'Error deactivating the receipt of historical events: {str(e)}')

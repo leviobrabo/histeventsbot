@@ -47,26 +47,24 @@ def get_births_of_the_day(CHANNEL):
 
                 bot.send_message(CHANNEL, message)
             else:
-                logger.info('-' * 50)
+
                 logger.info('No information about births today.')
-                logger.info('-' * 50)
+
         else:
-            logger.info('-' * 50)
+
             logger.warning('Error fetching information:', response.status_code)
-            logger.info('-' * 50)
+
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error('Error fetching information:', str(e))
-        logger.info('-' * 50)
 
 
 def hist_channel_birth():
     try:
         get_births_of_the_day(CHANNEL)
-        logger.info('-' * 50)
+
         logger.success(f'Births sent to the channel {CHANNEL}')
-        logger.info('-' * 50)
+
     except Exception as e:
-        logger.info('-' * 50)
+
         logger.error('Error sending birth job:', str(e))
-        logger.info('-' * 50)
