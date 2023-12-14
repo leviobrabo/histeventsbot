@@ -208,3 +208,13 @@ def search_id_presidente(id):
 
 def search_date_presidente(date):
     return db.presidentes.find_onde({'date': date})
+
+
+# Operations related to user counter
+
+def count_user_channel(count, date):
+    return db.counter.insert_one({'count': count, 'date': date})
+
+
+def get_last_entry():
+    return db.counter.find_one({}, sort=[('date', -1)])

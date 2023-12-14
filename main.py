@@ -134,6 +134,13 @@ def set_my_configs():
             except Exception as ex:
                 logger.error(ex)
 
+
+
+# Number of users on the channel
+schedule.every(1).days.do(get_current_count)
+schedule.every().day.at('12:59').do(get_current_count)
+
+
 # Poll sending to channel
 
 schedule.every().day.at('08:30').do(send_question)
