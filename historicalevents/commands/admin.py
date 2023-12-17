@@ -6,7 +6,7 @@ from historicalevents.database.db import *
 from historicalevents.loggers import logger
 
 
-@bot.message_handler(commands=['fwdoff'])
+@bot.message_handler(commands=['fwd_off'])
 def cmd_fwdoff(message):
     try:
         user_id = message.from_user.id
@@ -57,7 +57,7 @@ def cmd_fwdoff(message):
         logger.error(f'Error disabling chat forwarding: {str(e)}')
 
 
-@bot.message_handler(commands=['fwdon'])
+@bot.message_handler(commands=['fwd_on'])
 def cmd_fwdon(message):
     try:
         user_id = message.from_user.id
@@ -107,8 +107,8 @@ def cmd_fwdon(message):
         logger.error(f'Error enabling chat forwarding: {str(e)}')
 
 
-@bot.message_handler(commands=['settopic'])
-def cmd_settopic(message):
+@bot.message_handler(commands=['addtopic'])
+def cmd_addtopic(message):
     try:
         user_id = message.from_user.id
         chat_id = message.chat.id
@@ -150,8 +150,8 @@ def cmd_settopic(message):
 # unsettopic
 
 
-@bot.message_handler(commands=['unsettopic'])
-def cmd_unsettopic(message):
+@bot.message_handler(commands=['remtopic'])
+def cmd_remtopic(message):
     try:
         user_id = message.from_user.id
         chat_id = message.chat.id
