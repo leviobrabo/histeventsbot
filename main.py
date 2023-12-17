@@ -16,6 +16,7 @@ from historicalevents.commands.sudo import (cmd_add_sudo, cmd_broadcast_chat,
                                             cmd_list_devs, cmd_rem_sudo,
                                             cmd_stats, cmd_sudo, cmd_sys)
 from historicalevents.config import *
+from historicalevents.version import *
 from historicalevents.core.poll_channel import *
 from historicalevents.core.poll_chats import *
 from historicalevents.database.db import *
@@ -389,7 +390,8 @@ def callback_handler(call):
 def polling_thread():
 
     logger.success('Start polling...')
-
+    bot.send_message(
+        GROUP_LOG, f'#{BOT_NAME} #ONLINE\n\n<b>Bot is on</b>\n\n<b>Version:</b> {histevents_version}\n<b>Python version:</b> {python_version}\n<b>Lib version:</b> {telebot_version}')
     bot.polling(allowed_updates=util.update_types)
 
 
