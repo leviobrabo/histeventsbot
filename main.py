@@ -6,7 +6,7 @@ from telebot import util
 
 from historicalevents.bot.bot import bot
 from historicalevents.commands.admin import (cmd_fwdoff, cmd_fwdon,
-                                             cmd_settopic, cmd_unsettopic)
+                                             cmd_addtopic, cmd_remtopic)
 from historicalevents.commands.help import cmd_help
 from historicalevents.commands.photoshist import cmd_photo_hist
 from historicalevents.commands.send import cmd_sendoff, cmd_sendon
@@ -80,16 +80,17 @@ def set_my_configs():
         bot.set_my_commands(
             [
                 types.BotCommand(
-                    '/settopic',
+                    '/addtopic',
                     'Set a chat as a topic to receive daily messages',
                 ),
                 types.BotCommand(
-                    '/unsettopic',
+                    '/remtopic',
                     'Remove a chat as a topic to receive daily messages (returns to General)',
                 ),
                 types.BotCommand('/fotoshist', 'Historical facts photos 🙂'),
-                types.BotCommand('/fwdon', 'Enable forwarding in the group'),
-                types.BotCommand('/fwdoff', 'Disable forwarding in the group'),
+                types.BotCommand('/fwd_on', 'Enable forwarding in the group'),
+                types.BotCommand(
+                    '/fwd_off', 'Disable forwarding in the group'),
             ],
             scope=types.BotCommandScopeAllChatAdministrators(),
         )
@@ -335,10 +336,10 @@ def callback_handler(call):
                 '/fotoshist - Historical facts photos 🙂\n'
                 '/sendon - You will receive the daily message at 8 AM\n'
                 '/sendoff - You will not receive the daily message at 8 AM\n'
-                '/fwdoff - Disable forwarding in the group\n'
-                '/fwdon - Enable forwarding in the group\n'
-                '/settopic - Set a chat as a topic to receive daily messages\n'
-                '/unsettpoic - Remove a chat as a topic to receive daily messages (returns to General)\n'
+                '/fwd_off - Disable forwarding in the group\n'
+                '/fwd_on - Enable forwarding in the group\n'
+                '/addtopic - Set a chat as a topic to receive daily messages\n'
+                '/remtpoic - Remove a chat as a topic to receive daily messages (returns to General)\n'
             )
             photo = 'https://i.imgur.com/j3H3wvJ.png'
             bot.edit_message_media(
