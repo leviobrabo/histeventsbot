@@ -64,5 +64,11 @@ def cmd_start(message):
         )
 
     except Exception as e:
-
+        bot.leave_chat(message.chat.id)
+        logger.info(f'Bot left the group due to an error.')
         logger.error(f'Error while sending the start message: {e}')
+        remove_chat_db(message.chat_id)
+
+        logger.warning(
+            f'Chat {message.chat_id} removed from the database due to an error while sending historical events message.'
+        )
