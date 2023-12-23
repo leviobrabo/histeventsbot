@@ -23,9 +23,14 @@ def send_historical_events_group_image(chat_id):
             f'https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/{month}/{day}'
         )
         events = response.json().get('events', [])
+        events_with_photo = [
+            event
+            for event in events
+            if event.get('pages') and event['pages'][0].get('thumbnail')
+        ]
 
-        if events:
-            random_event = random.choice(events)
+        if events_with_photo:
+            random_event = random.choice(events_with_photo)
             event_text = random_event.get('text', '')
             event_year = random_event.get('year', '')
 
@@ -33,40 +38,28 @@ def send_historical_events_group_image(chat_id):
             inline_keyboard = types.InlineKeyboardMarkup()
             inline_keyboard.add(
                 types.InlineKeyboardButton(
-                    text='📢 Official Channel',
+                    text='\U0001f4e2 Official Channel',
                     url='https://t.me/today_in_historys',
                 )
             )
 
-            if random_event.get('pages') and random_event['pages'][0].get(
-                'thumbnail'
-            ):
-                photo_url = random_event['pages'][0]['thumbnail']['source']
-                bot.send_photo(
-                    chat_id,
-                    photo_url,
-                    caption,
-                    parse_mode='HTML',
-                    reply_markup=inline_keyboard,
-                )
-            else:
-                bot.send_message(
-                    chat_id,
-                    caption,
-                    parse_mode='HTML',
-                    reply_markup=inline_keyboard,
-                )
+            photo_url = random_event['pages'][0]['thumbnail']['source']
+            bot.send_photo(
+                chat_id,
+                photo_url,
+                caption=caption,
+                parse_mode='HTML',
+                reply_markup=inline_keyboard,
+            )
 
             logger.success(
                 f'Historical event in photo sent successfully to chat ID {chat_id}.'
             )
 
         else:
-
-            logger.info('There are no historical events for the current day.')
+            logger.info('There are no events with photos for the current day.')
 
     except Exception as e:
-
         logger.error(f'Failed to send historical event: {e}')
 
 
@@ -79,11 +72,9 @@ def hist_image_chat_job():
                 try:
                     send_historical_events_group_image(chat_id)
                 except Exception as e:
-
                     logger.error(
                         f'Error sending image historical events to group {chat_id}: {str(e)}'
                     )
 
     except Exception as e:
-
         logger.error('Error sending images to chats:', str(e))
