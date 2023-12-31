@@ -5,8 +5,8 @@ import schedule
 from telebot import util
 
 from historicalevents.bot.bot import bot
-from historicalevents.commands.admin import (cmd_fwdoff, cmd_fwdon,
-                                             cmd_addtopic, cmd_remtopic)
+from historicalevents.commands.admin import (cmd_addtopic, cmd_fwdoff,
+                                             cmd_fwdon, cmd_remtopic)
 from historicalevents.commands.help import cmd_help
 from historicalevents.commands.photoshist import cmd_photo_hist
 from historicalevents.commands.send import cmd_sendoff, cmd_sendon
@@ -16,11 +16,12 @@ from historicalevents.commands.sudo import (cmd_add_sudo, cmd_broadcast_chat,
                                             cmd_list_devs, cmd_rem_sudo,
                                             cmd_stats, cmd_sudo, cmd_sys)
 from historicalevents.config import *
-from historicalevents.version import *
 from historicalevents.core.poll_channel import *
 from historicalevents.core.poll_chats import *
 from historicalevents.database.db import *
 from historicalevents.handlers.birth_of_day import *
+from historicalevents.handlers.channel_creation_message import *
+from historicalevents.handlers.christmas_message import *
 from historicalevents.handlers.count_user_channel import *
 from historicalevents.handlers.curiosity_channel import *
 from historicalevents.handlers.death_of_day import *
@@ -30,12 +31,12 @@ from historicalevents.handlers.event_hist_users import *
 from historicalevents.handlers.holiday import *
 from historicalevents.handlers.image_hist_events_channel import *
 from historicalevents.handlers.image_hist_events_chat import *
+from historicalevents.handlers.new_year_message import *
 from historicalevents.handlers.prase_channel import *
 from historicalevents.handlers.presidents import *
 from historicalevents.loggers import logger
 from historicalevents.utils.welcome import *
-from historicalevents.handlers.christmas_message import *
-from historicalevents.handlers.new_year_message import *
+from historicalevents.version import *
 
 
 def sudos(user_id):
@@ -93,7 +94,8 @@ def set_my_configs():
                 types.BotCommand('/fotoshist', 'Historical facts photos 🙂'),
                 types.BotCommand('/fwd_on', 'Enable forwarding in the group'),
                 types.BotCommand(
-                    '/fwd_off', 'Disable forwarding in the group'),
+                    '/fwd_off', 'Disable forwarding in the group'
+                ),
             ],
             scope=types.BotCommandScopeAllChatAdministrators(),
         )
@@ -195,6 +197,7 @@ schedule.every().day.at('20:00').do(send_president_photo)
 
 # Sending Christmas messages
 
+
 def check_date():
     current_date = datetime.now()
     if current_date.month == 12 and current_date.day == 25:
@@ -214,6 +217,10 @@ def check_date_ny():
 
 schedule.every().minute.do(check_date)
 schedule.every().minute.do(check_date_ny)
+
+# Sending channel creation message
+
+schedule.every().day.at('22:50').do(schedule_anniversary)
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -415,7 +422,9 @@ def polling_thread():
 
     logger.success('Start polling...')
     bot.send_message(
-        GROUP_LOG, f'#{BOT_NAME} #ONLINE\n\n<b>Bot is on</b>\n\n<b>Version:</b> {histevents_version}\n<b>Python version:</b> {python_version}\n<b>Lib version:</b> {telebot_version}')
+        GROUP_LOG,
+        f'#{BOT_NAME} #ONLINE\n\n<b>Bot is on</b>\n\n<b>Version:</b> {histevents_version}\n<b>Python version:</b> {python_version}\n<b>Lib version:</b> {telebot_version}',
+    )
     bot.polling(allowed_updates=util.update_types)
 
 
