@@ -191,6 +191,16 @@ schedule.every().day.at('21:30').do(hist_channel_quote)
 
 schedule.every().day.at('20:00').do(send_president_photo)
 
+# Sending Christmas messages
+
+def check_date():
+    current_date = datetime.now()
+    if current_date.month == 12 and current_date.day == 25:
+        schedule.every().day.at('00:00').do(christmas_message)
+
+
+schedule.every().minute.do(check_date)
+
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_handler(call):
