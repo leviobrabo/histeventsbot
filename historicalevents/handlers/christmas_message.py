@@ -9,7 +9,7 @@ from historicalevents.utils.month import *
 
 def christmas_message():
     try:
-        photo_url = 'https://i.imgur.com/0znRX8g.png'
+        photo_url = 'https://i.imgur.com/YRnwSxX.png'
 
         caption = f'The Today in History channel wishes you a Merry Christmas! 🎊❤️🎉\n\nChristmas is more than a celebration, it\'s a new chance for us to reinvent ourselves and become better people. A Merry and beautiful Christmas to everyone!\n\nAnd let\'s learn more information about history!'
 
