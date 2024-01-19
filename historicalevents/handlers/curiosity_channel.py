@@ -30,7 +30,7 @@ def get_curiosity(CHANNEL):
                 # For 2025 (uncomment this line and comment the line above)
                 # info = curiosidade[1].get("texto1", "")
 
-                message = f'<b>Historical Curiosities 📜</b>\n\n{info}\n\n💬 Did you know? Follow @today_in_historys.'
+                message = f'<b>Historical Curiosities 📜</b>\n\n{info}\n\n<blockquote>💬 Did you know? Follow @today_in_historys.</blockquote>'
                 bot.send_message(CHANNEL, message)
             else:
 

@@ -43,7 +43,7 @@ def get_births_of_the_day(CHANNEL):
 
                 message = f'<b>🎂 | Births on this day: {day} {get_month_name(month)}</b>\n\n'
                 message += '\n\n'.join(birth_messages)
-                message += '\n\n💬 Did you know? Follow @today_in_historys.'
+                message += '\n\n<blockquote>💬 Did you know? Follow @today_in_historys.</blockquote>'
 
                 bot.send_message(CHANNEL, message)
             else:
