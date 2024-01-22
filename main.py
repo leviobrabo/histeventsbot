@@ -198,29 +198,29 @@ schedule.every().day.at('20:01').do(send_president_photo)
 # Sending Christmas messages
 
 
-def check_date():
-    current_date = datetime.now()
-    if current_date.month == 12 and current_date.day == 25:
-        schedule.every().day.at('00:01').do(christmas_message)
+# def check_date():
+#     current_date = datetime.now()
+#     if current_date.month == 12 and current_date.day == 25:
+#         schedule.every().day.at('00:01').do(christmas_message)
 
 
-schedule.every().minute.do(check_date)
+# schedule.every().minute.do(check_date)
 
-# Sending new year message
-
-
-def check_date_ny():
-    current_date = datetime.now()
-    if current_date.month == 12 and current_date.day == 31:
-        schedule.every().day.at('23:58').do(new_year_message)
+# # Sending new year message
 
 
-schedule.every().minute.do(check_date)
-schedule.every().minute.do(check_date_ny)
+# def check_date_ny():
+#     current_date = datetime.now()
+#     if current_date.month == 12 and current_date.day == 31:
+#         schedule.every().day.at('23:58').do(new_year_message)
 
-# Sending channel creation message
 
-schedule.every().day.at('22:51').do(schedule_anniversary)
+# schedule.every().minute.do(check_date)
+# schedule.every().minute.do(check_date_ny)
+
+# # Sending channel creation message
+
+# schedule.every().day.at('22:51').do(schedule_anniversary)
 
 
 @bot.callback_query_handler(func=lambda call: True)
