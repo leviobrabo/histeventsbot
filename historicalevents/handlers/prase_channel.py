@@ -26,7 +26,7 @@ def get_quote(CHANNEL):
                 quote = quote_info.get('quote', '')
                 author = quote_info.get('author', '')
 
-                message = f'<b>💡 Quote for reflection</b>\n\n"<i>{quote}"</i> - <b>{author}</b>\n\n<blockquote>💬 Did you know? Follow @today_in_historys.</blockquote>'
+                message = f'<b>💡 Quote for reflection</b>\n\n<blockquote><i>"{quote}"</i> - <b>{author}</b></blockquote>'
                 bot.send_message(CHANNEL, message)
             else:
 
