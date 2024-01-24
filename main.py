@@ -28,6 +28,7 @@ from historicalevents.handlers.death_of_day import *
 from historicalevents.handlers.event_hist_channel import *
 from historicalevents.handlers.event_hist_chats import *
 from historicalevents.handlers.event_hist_users import *
+from historicalevents.handlers.follow_channels import *
 from historicalevents.handlers.holiday import *
 from historicalevents.handlers.image_hist_events_channel import *
 from historicalevents.handlers.image_hist_events_chat import *
@@ -127,6 +128,9 @@ def set_my_configs():
             except Exception as ex:
                 logger.error(ex)
 
+
+
+schedule.every().friday.at('22:30').do(message_CHANNEL_HISTORY_ALERT)
 
 # Number of users on the channel
 schedule.every(1).days.do(get_current_count)
