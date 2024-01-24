@@ -205,7 +205,7 @@ def check_dates_day():
     current_date = datetime.now()
     if current_date.month == 12 and current_date.day == 25:
         christmas_message()
-    elif current_date.month == 12 and current_date.day == 31:
+    elif current_date.month == 1 and current_date.day == 1:
         new_year_message()
     elif current_date.month == 11 and current_date.day == 19:
         schedule_anniversary()
