@@ -139,17 +139,17 @@ schedule.every(1).days.do(get_current_count)
 
 # Poll sending to channel
 
-schedule.every().day.at('08:31').do(send_question)
-schedule.every().day.at('12:11').do(send_question)
-schedule.every().day.at('14:01').do(send_question)
-schedule.every().day.at('18:31').do(send_question)
+schedule.every().day.at('08:30').do(send_question)
+schedule.every().day.at('12:10').do(send_question)
+schedule.every().day.at('14:00').do(send_question)
+schedule.every().day.at('18:30').do(send_question)
 
 # Poll sending to chats
 
-schedule.every().day.at('10:31').do(send_question_chat)
-schedule.every().day.at('14:31').do(send_question_chat)
-schedule.every().day.at('16:31').do(send_question_chat)
-schedule.every().day.at('21:31').do(send_question_chat)
+schedule.every().day.at('10:30').do(send_question_chat)
+schedule.every().day.at('14:30').do(send_question_chat)
+schedule.every().day.at('16:30').do(send_question_chat)
+schedule.every().day.at('21:30').do(send_question_chat)
 
 # Remove polls from the database
 
@@ -157,47 +157,47 @@ schedule.every().day.at('21:31').do(send_question_chat)
 
 # Sending historical events in chats
 
-schedule.every().day.at('08:01').do(hist_chat_job)
+schedule.every().day.at('08:00').do(hist_chat_job)
 
 # Sending historical events to users
 
-schedule.every().day.at('08:31').do(hist_user_job)
+schedule.every().day.at('08:30').do(hist_user_job)
 
 # Sending historical events to the channel
 
-schedule.every().day.at('05:01').do(hist_channel)
+schedule.every().day.at('05:00').do(hist_channel)
 
 # Sending deaths of the day to the channel
 
-schedule.every().day.at('15:31').do(hist_channel_death)
+schedule.every().day.at('15:30').do(hist_channel_death)
 
 # Sending births of the day to the channel
 
-schedule.every().day.at('01:01').do(hist_channel_birth)
+schedule.every().day.at('01:00').do(hist_channel_birth)
 
 # Sending holidays of the day to the channel
 
-schedule.every().day.at('00:01').do(hist_channel_holiday)
+schedule.every().day.at('00:00').do(hist_channel_holiday)
 
 # Sending historical photos to the group
 
-schedule.every().day.at('15:01').do(hist_image_chat_job)
+schedule.every().day.at('15:00').do(hist_image_chat_job)
 
 # Sending historical photos to the channel
 
-schedule.every().day.at('17:01').do(hist_channel_imgs)
+schedule.every().day.at('17:00').do(hist_channel_imgs)
 
 # Sending curiosities to the channel
 
-schedule.every().day.at('10:01').do(hist_channel_curiosity)
+schedule.every().day.at('10:00').do(hist_channel_curiosity)
 
 # Sending quotes to the channel
 
-schedule.every().day.at('21:31').do(hist_channel_quote)
+schedule.every().day.at('21:30').do(hist_channel_quote)
 
 # Sending presidents to the channel
 
-schedule.every().day.at('20:01').do(send_president_photo)
+schedule.every().day.at('20:00').do(send_president_photo)
 
 # Sending Christmas messages
 
