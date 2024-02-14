@@ -21,7 +21,7 @@ def cmd_start(message):
             user = search_user(user_id)
             user_info = f"<b>#{BOT_USERNAME} #New_User</b>\n<b>User:</b> {user['first_name']}\n<b>ID:</b> <code>{user['user_id']}</code>\n<b>Username</b>: {user['username']}"
             time.sleep(30)
-            bot.send_message(GROUP_LOG, user_info)
+            bot.send_message(GROUP_LOG, user_info, message_thread_id=38558)
 
             logger.info(
                 f'New user ID: {user["user_id"]} was created in the database'
