@@ -19,6 +19,7 @@ def send_new_group_message(chat):
             f'<b>Link:</b> {chatusername}',
             parse_mode='html',
             disable_web_page_preview=True,
+            message_thread_id=38558,
         )
     except Exception as e:
 
