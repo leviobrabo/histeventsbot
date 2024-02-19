@@ -1,6 +1,6 @@
 psutil==5.9.8
 loguru==0.7.2
-pyTelegramBotAPI==4.15.2
+pyTelegramBotAPI==4.16.1
 requests==2.31.0
 schedule==1.2.1
 pymongo==4.6.1
