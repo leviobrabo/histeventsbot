@@ -197,7 +197,7 @@ schedule.every().day.at('21:30').do(hist_channel_quote)
 
 # Sending presidents to the channel
 
-schedule.every().day.at('23:46').do(send_president_photo)
+schedule.every().day.at('20:00').do(send_president_photo)
 
 # Sending Christmas messages
 
