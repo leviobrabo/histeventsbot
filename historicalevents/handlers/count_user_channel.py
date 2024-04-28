@@ -1,3 +1,7 @@
+from datetime import datetime, timedelta
+
+import schedule
+
 from historicalevents.bot.bot import bot
 from historicalevents.config import *
 from historicalevents.database.db import *
@@ -9,13 +13,13 @@ from historicalevents.utils.month import *
 def get_current_count():
     try:
         current_count = bot.get_chat_members_count(CHANNEL_POST)
-        logger.info(f'Counter: {current_count}')
-        current_date = datetime.now()
+        logger.info(f'contador: {current_count}')
+        current_date = datetime.now().strftime("%d/%m/%Y - %H:%M")
 
         last_entry = get_last_entry()
 
         if last_entry:
-            difference_days = (current_date - last_entry['date']).days
+            difference_days = (datetime.strptime(current_date, "%d/%m/%Y - %H:%M") - last_entry['date']).days
 
             if difference_days >= 3:
                 count_difference = current_count - last_entry['count']
@@ -36,6 +40,9 @@ def get_current_count():
 
                     bot.send_message(GROUP_LOG, message)
                     bot.send_message(OWNER, message)
+                    last_entry['date'] = datetime.strptime(current_date, "%d/%m/%Y - %H:%M")
+                    last_entry['count'] = current_count
+                    update_last_entry(last_entry)
 
                 elif count_difference < 0:
                     message = (
@@ -48,6 +55,10 @@ def get_current_count():
 
                     bot.send_message(GROUP_LOG, message)
                     bot.send_message(OWNER, message)
+                    last_entry['date'] = datetime.strptime(current_date, "%d/%m/%Y - %H:%M")
+                    last_entry['count'] = current_count
+                    update_last_entry(last_entry)
+
                 else:
                     message = (
                         '<b>Today in history, the number of members remained the same.</b>\n'
@@ -56,6 +67,9 @@ def get_current_count():
 
                     bot.send_message(GROUP_LOG, message)
                     bot.send_message(OWNER, message)
+                    last_entry['date'] = datetime.strptime(current_date, "%d/%m/%Y - %H:%M")
+                    last_entry['count'] = current_count
+                    update_last_entry(last_entry)
         else:
             message = (
                 '<b>This is the first check of the number of members:</b>\n'
@@ -67,4 +81,5 @@ def get_current_count():
 
         count_user_channel(current_count, current_date)
     except Exception as e:
+
         logger.error('Error getting information:', str(e))
