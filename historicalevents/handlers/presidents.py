@@ -35,15 +35,22 @@ def send_president_photo():
                 last_president['date'], '%Y-%m-%d'
             )
 
-            next_id = int(last_id) + 1
-            next_date = sending_date + timedelta(days=1)
-
             today = datetime.now(pytz.timezone('America/Sao_Paulo'))
-            if next_date.date() == today.date():
+            today_str = today.strftime('%Y-%m-%d')
+
+            if last_president['date'] != today_str:
+
+                logger.info(
+                    'Atualizando informações do último presidente para a data atual.'
+                )
+
+                next_id = last_id + 1
                 next_president = presidents.get(str(next_id))
                 if next_president:
-                    date = next_date.strftime('%Y-%m-%d')
-                    add_presidents_db(next_id, date)
+                    db.presidentes.update_one(
+                        {'date': last_president['date']},
+                        {'$set': {'date': today_str}, '$inc': {'id': 1}},
+                    )
 
                     send_info_through_channel(next_president)
                 else:
@@ -65,13 +72,14 @@ def send_president_photo():
 
 def send_info_through_channel(president_info):
     try:
-        title = president_info.get('title', '')
-        name = president_info.get('name', '')
-        position = president_info.get('position', '')
-        party = president_info.get('party', '')
-        term_year = president_info.get('term_year', '')
-        vice_president = president_info.get('vice_president', '')
-        photo = president_info.get('photo', '')
+        title = president_info.get('titulo', '')
+        name = president_info.get('nome', '')
+        position = president_info.get('posicao', '')
+        party = president_info.get('partido', '')
+        term_year = president_info.get('ano_de_mandato', '')
+        vice_president = president_info.get('vice_presidente', '')
+        photo = president_info.get('foto', '')
+        where = president_info.get('local', '')
 
         caption = (
             f'<b>{title}</b>\n\n'
@@ -79,7 +87,8 @@ def send_info_through_channel(president_info):
             f'<b>Information:</b> {position}° {title}\n'
             f'<b>Party:</b> {party}\n'
             f'<b>Term Year:</b> {term_year}\n'
-            f'<b>Vice-President:</b> {vice_president}\n\n'
+            f'<b>Vice-President:</b> {vice_president}\n'
+            f'<b>location</b> {where}\n\n'
             f'<blockquote>💬 Did you know? Follow @today_in_historys.</blockquote>'
         )
 
