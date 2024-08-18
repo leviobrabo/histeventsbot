@@ -409,21 +409,27 @@ def callback_handler(call):
         logger.error(e)
 
 
-def polling_thread():
 
-    logger.success('Start polling...')
-    bot.send_message(
-        GROUP_LOG,
-        f'#{BOT_NAME} #ONLINE\n\n<b>Bot is on</b>\n\n<b>Version:</b> {histevents_version}\n<b>Python version:</b> {python_version}\n<b>Lib version:</b> {telebot_version}',
-        message_thread_id=38558,
-    )
-    bot.polling(allowed_updates=util.update_types)
+def polling_thread():
+    try:
+        logger.success('Start polling...')
+        bot.send_message(
+            GROUP_LOG,
+            f'#{BOT_NAME} #ONLINE\n\n<b>Bot is on</b>\n\n<b>Version:</b> {histevents_version}\n<b>Python version:</b> {python_version}\n<b>Lib version:</b> {telebot_version}',
+            message_thread_id=38558,
+        )
+        bot.polling(allowed_updates=util.update_types)
+    except Exception as e:
+        logger.error(f"Error in polling_thread: {e}")
 
 
 def schedule_thread():
-    while True:
-        schedule.run_pending()
-        sleep(1)
+    try:
+        while True:
+            schedule.run_pending()
+            sleep(1)
+    except Exception as e:
+        logger.error(f"Error in schedule_thread: {e}")
 
 
 polling_thread = threading.Thread(target=polling_thread)
@@ -434,4 +440,8 @@ try:
     polling_thread.start()
     schedule_thread.start()
 except Exception as e:
-    pass
+     logger.error(f"Error starting threads: {e}")
+
+
+
+
