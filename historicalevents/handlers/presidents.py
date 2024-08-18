@@ -41,13 +41,13 @@ def send_president_photo():
             if last_president['date'] != today_str:
 
                 logger.info(
-                    'Atualizando informações do último presidente para a data atual.'
+                    'Updating information from the last president to the current date.'
                 )
 
                 next_id = last_id + 1
                 next_president = presidents.get(str(next_id))
                 if next_president:
-                    db.presidentes.update_one(
+                    db.presidents.update_one(
                         {'date': last_president['date']},
                         {'$set': {'date': today_str}, '$inc': {'id': 1}},
                     )

@@ -200,7 +200,7 @@ def search_poll(poll_id):
 
 
 def add_presidents_db(id, date):
-    return db.presidentes.insert_one(
+    return db.presidents.insert_one(
         {
             'id': id,
             'date': date,
@@ -208,12 +208,20 @@ def add_presidents_db(id, date):
     )
 
 
+def rem_presidents_db(date):
+    return db.presidents.delete_one(
+        {
+            'date': date,
+        }
+    )
+
+
 def search_id_presidente(id):
-    return db.presidentes.find_one({'id': id})
+    return db.presidents.find_one({'id': id})
 
 
 def search_date_presidente(date):
-    return db.presidentes.find_onde({'date': date})
+    return db.presidents.find_one({'date': date})
 
 
 # Operations related to user counter
