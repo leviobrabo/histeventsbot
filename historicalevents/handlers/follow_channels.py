@@ -13,7 +13,7 @@ from historicalevents.utils.month import *
 
 def message_CHANNEL_HISTORY_ALERT():
     try:
-        message = "🌟 📺 **Join our amazing History channel!** 📺 🌟\n\n"\
+        message = "🌟 📺 <b>Join our amazing History channel!</b> 📺 🌟\n\n"\
             "Friends, discover the magic of history through our engaging and thrilling channels! "\
             "Join us now to enjoy a wide range of programs and documentaries that will take you on an exciting journey "\
             "through the depths of history.\n\n"\
