@@ -78,24 +78,35 @@ def send_group_greeting(message: types.ChatMemberUpdated):
             )
 
             send_new_group_message(message.chat)
+            try:
+                chat_member = bot.get_chat_member(chat_id, bot.get_me().id)
+                
+                if chat_member.can_send_messages:
 
-            if message.chat.type in ['group', 'supergroup', 'channel']:
-                markup = types.InlineKeyboardMarkup()
-                channel_ofc = types.InlineKeyboardButton(
-                    'Official Channel 🇧🇷', url='https://t.me/today_in_historys'
-                )
-                report_bugs = types.InlineKeyboardButton(
-                    'Report Bugs', url='https://t.me/kylorensbot'
-                )
-                markup.add(channel_ofc, report_bugs)
-                bot.send_message(
-                    chat_id,
-                    'Hello, my name is <b>Historical events</b>! Thank you for adding me to your group.\n\nI will send messages every day at 8 AM and I have some commands.\n\nIf you want to receive more historical facts, grant me administrator permissions to pin messages and invite users via link.',
-                    reply_markup=markup,
-                )
+                    if message.chat.type in ['group', 'supergroup', 'channel']:
+                        markup = types.InlineKeyboardMarkup()
+                        channel_ofc = types.InlineKeyboardButton(
+                            'Official Channel 🇧🇷', url='https://t.me/today_in_historys'
+                        )
+                        report_bugs = types.InlineKeyboardButton(
+                            'Report Bugs', url='https://t.me/kylorensbot'
+                        )
+                        markup.add(channel_ofc, report_bugs)
+                        bot.send_message(
+                            chat_id,
+                            'Hello, my name is <b>Historical events</b>! Thank you for adding me to your group.\n\nI will send messages every day at 8 AM and I have some commands.\n\nIf you want to receive more historical facts, grant me administrator permissions to pin messages and invite users via link.',
+                            reply_markup=markup,
+                        )
+                    else:
+                        logger.error(f'O bot não tem permissão para enviar mensagens no grupo com ID {chat_id}.')
+            
+            except Exception as e:
+
+                logger.error(f'Error handling group greeting: {e}')
+
     except Exception as e:
 
-        logger.error(f'Error handling group greeting: {e}')
+        logger.error(f'Error cmd group greeting: {e}')
 
 
 @bot.message_handler(content_types=['left_chat_member'])
