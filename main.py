@@ -418,10 +418,10 @@ def polling_thread():
             f'#{BOT_NAME} #ONLINE\n\n<b>Bot is on</b>\n\n<b>Version:</b> {histevents_version}\n<b>Python version:</b> {python_version}\n<b>Lib version:</b> {telebot_version}',
             message_thread_id=38558,
         )
-        bot.polling(allowed_updates=util.update_types)
+        bot.infinity_polling(allowed_updates=util.update_types)
     except Exception as e:
         logger.error(f"Error in polling_thread: {e}")
-
+        bot.stop_polling()
 
 def schedule_thread():
     try:
