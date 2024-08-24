@@ -10,7 +10,7 @@ from historicalevents.loggers import logger
 @bot.message_handler(commands=['start'])
 def cmd_start(message):
     try:
-        if message.chat.type != 'private':
+        if message.chat.type == 'private':
             user_id = message.from_user.id
             user = search_user(user_id)
             first_name = message.from_user.first_name
