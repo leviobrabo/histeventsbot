@@ -297,7 +297,23 @@ def callback_handler(call):
                 '↩️ Back', callback_data='menu_start'
             )
             markup.add(back_to_home)
-            msg_text = 'how to use the bot (Under development)'
+            msg_text = (
+                "🤖 <b>How to use the Historical Events bot:</b>\n\n"
+                "1️⃣ <b>/start</b> - Start interacting with the bot and receive a welcome message.\n"
+                "2️⃣ <b>/help</b> - Get information on how to use the bot and see the available commands.\n"
+                "3️⃣ <b>/fotoshist</b> - Sends historical photos.\n"
+                "4️⃣ <b>/sendon</b> - To receive historical messages every day at 8 AM.\n"
+                "5️⃣ <b>/sendoff</b> - To stop receiving historical messages every day at 8 AM.\n\n"
+                "🌐 The bot works best in a channel or group, so add the bot to one for optimal learning.\n\n"
+                "❇️ New features coming soon.\n\n"
+                "📅 <b>Main Features:</b>\n"
+                "- Receive daily historical facts.\n"
+                "- Notifications for holidays and important events.\n"
+                "- Personalized messages for special occasions.\n"
+                "- Historical research and curiosities.\n\n"
+                "🔧 <b>Utilities:</b> Anti-spam, historical data, automatic greetings, daily questions, and much more!"
+            )
+
             photo = 'https://i.imgur.com/8BCiwvz.png'
             bot.edit_message_media(
                 chat_id=call.message.chat.id,
