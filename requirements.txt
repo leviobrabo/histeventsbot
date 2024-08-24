@@ -1,7 +1,7 @@
-psutil==5.9.8
+psutil==6.0.0
 loguru==0.7.2
-pyTelegramBotAPI==4.17.0
-requests==2.31.0
-schedule==1.2.1
-pymongo==4.7.0
-configparser==7.0.0
+pyTelegramBotAPI==4.23.0
+requests==2.32.3
+schedule==1.2.2
+pymongo==4.8.0
+configparser==7.1.0
