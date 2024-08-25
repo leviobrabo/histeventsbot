@@ -202,8 +202,9 @@ schedule.every().day.at('20:00').do(send_president_photo)
 
 # Sending daily history
 
-schedule.every().day.at('18:12').do(hist_channel_history)
+schedule.every().day.at('07:00').do(hist_channel_history)
 
+#
 
 # Sending Christmas messages
 
