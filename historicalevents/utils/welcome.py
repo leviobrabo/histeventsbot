@@ -58,8 +58,7 @@ def send_group_greeting(message: types.ChatMemberUpdated):
             try:
                 chat_member = bot.get_chat_member(chat_id, bot.get_me().id)
 
-                if chat_member.can_send_messages:
-                    if message.chat.type in ["group", "supergroup", "channel"]:
+                if message.chat.type in ["group", "supergroup", "channel"]:
                         markup = types.InlineKeyboardMarkup()
                         channel_ofc = types.InlineKeyboardButton(
                             "Official Channel 🇧🇷", url="https://t.me/today_in_historys"
@@ -75,12 +74,7 @@ def send_group_greeting(message: types.ChatMemberUpdated):
                             reply_markup=markup,
                             parse_mode="HTML",
                         )
-                else:
-                    logger.error(
-                        f"The bot does not have permission to send messages in the group with ID {chat_id}."
-                    )
-                    bot.leave_chat(chat_id)
-                    logger.info(f"The bot left the group with ID {chat_id}.")
+                
             except Exception as e:
                 logger.error(f"Error handling group greeting: {e}")
 
@@ -113,27 +107,21 @@ def handle_text_messages(message):
             try:
                 chat_member = bot.get_chat_member(chat_id, bot.get_me().id)
 
-                if chat_member.can_send_messages:
-                    markup = types.InlineKeyboardMarkup()
-                    channel_ofc = types.InlineKeyboardButton(
+                markup = types.InlineKeyboardMarkup()
+                channel_ofc = types.InlineKeyboardButton(
                         "Official Channel 🇧🇷", url="https://t.me/today_in_historys"
                     )
-                    report_bugs = types.InlineKeyboardButton(
+                report_bugs = types.InlineKeyboardButton(
                         "Report Bugs", url="https://t.me/kylorensbot"
                     )
-                    markup.add(channel_ofc, report_bugs)
-                    bot.send_message(
+                markup.add(channel_ofc, report_bugs)
+                bot.send_message(
                         chat_id,
                         "Hello, my name is <b>Historical Events</b>! Thank you for adding me to your group.\n\nI will send messages every day at 8 AM and have some commands.\n\nIf you want to receive more historical facts, grant me administrator permissions to pin messages and invite users via link.",
                         reply_markup=markup,
                         parse_mode="HTML",
                     )
-                else:
-                    logger.error(
-                        f"The bot does not have permission to send messages in the group with ID {chat_id}."
-                    )
-                    bot.leave_chat(chat_id)
-                    logger.info(f"The bot left the group with ID {chat_id}.")
+                
             except Exception as e:
                 logger.error(f"Error handling group greeting: {e}")
     except Exception as e:
