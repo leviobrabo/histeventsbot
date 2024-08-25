@@ -25,6 +25,7 @@ from historicalevents.handlers.christmas_message import *
 from historicalevents.handlers.count_user_channel import *
 from historicalevents.handlers.curiosity_channel import *
 from historicalevents.handlers.death_of_day import *
+from historicalevents.handlers.historys import *
 from historicalevents.handlers.event_hist_channel import *
 from historicalevents.handlers.event_hist_chats import *
 from historicalevents.handlers.event_hist_users import *
@@ -198,6 +199,11 @@ schedule.every().day.at('21:30').do(hist_channel_quote)
 # Sending presidents to the channel
 
 schedule.every().day.at('20:00').do(send_president_photo)
+
+# Sending daily history
+
+schedule.every().day.at('18:12').do(hist_channel_history)
+
 
 # Sending Christmas messages
 
