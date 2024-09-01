@@ -20,10 +20,14 @@ def send_historical_events_user(user_id):
 
         markup = types.InlineKeyboardMarkup()
         channel_ofc = types.InlineKeyboardButton(
-            'Official Channel 🇧🇷', url='https://t.me/today_in_historys'
+            'Official Channel', url='https://t.me/today_in_historys'
+        )
+        site = types.InlineKeyboardButton(
+            'WebSite', url='https://www.histday.com'
         )
         markup.add(channel_ofc)
 
+        
         if events:
             message = f'<b>TODAY IN HISTORY</b>\n\n📅 | Event on <b>{day}/{month}</b>\n\n{events}'
             sent_message = bot.send_message(

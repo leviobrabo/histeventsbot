@@ -89,7 +89,7 @@ def send_info_through_channel(president_info):
             f'<b>Term Year:</b> {term_year}\n'
             f'<b>Vice-President:</b> {vice_president}\n'
             f'<b>Location</b> {where}\n\n'
-            f'<blockquote>💬 Did you know? Follow @today_in_historys.</blockquote>'
+            f'<blockquote>💬 Did you know? Follow @today_in_historys and access our website histday.com.</blockquote>'
         )
 
         logger.success('President sending completed successfully!')

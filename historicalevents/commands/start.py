@@ -53,7 +53,7 @@ def cmd_start(message):
             markup.add(config_pv)
 
             photo = 'https://i.imgur.com/8BCiwvz.png'
-            msg_start = f"Hello, <b>{first_name}</b>!\n\nI am <b>Historical Events</b>, a bot that sends daily messages containing historical events that happened on the day of the message's delivery.\n\nSending messages in private chat is automatic. If you wish to stop receiving messages, type /sendoff. To start receiving again, type /sendon\n\n<b>The message is sent every day at 8 AM</b>\n\nAdd me to your group to receive the messages there.\n\n<b>Commands:</b> /help\n\n📦<b>My source code:</b> <a href='https://github.com/leviobrabo/historicaleventsbot'>GitHub</a>"
+            msg_start = f"Hello, <b>{first_name}</b>!\n\nI am <b>Historical Events</b>, a bot that sends daily messages containing historical events that happened on the day of the message's delivery.\n\nSending messages in private chat is automatic. If you wish to stop receiving messages, type /sendoff. To start receiving again, type /sendon\n\n<b>The message is sent every day at 8 AM</b>\n\nAdd me to your group to receive the messages there.\n\n<b>Commands:</b> /help\n\n📦<b>My source code:</b> <a href='https://github.com/leviobrabo/historicaleventsbot'>GitHub</a>\n\n🔗<b>WebSite</b> <a href='https://www.histday.com/'>Here</a>"
 
             bot.send_photo(
                 message.chat.id,

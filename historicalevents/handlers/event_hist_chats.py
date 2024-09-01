@@ -22,9 +22,13 @@ def send_historical_events_group(chat_id):
 
         markup = types.InlineKeyboardMarkup()
         channel_ofc = types.InlineKeyboardButton(
-            'Official Channel 🇧🇷', url='https://t.me/today_in_historys'
+            'Official Channel', url='https://t.me/today_in_historys'
+        )
+        site = types.InlineKeyboardButton(
+            'Website', url='https://www.histday.com'
         )
         markup.add(channel_ofc)
+        markup.add(site)
 
         if events:
             message = f'<b>TODAY IN HISTORY</b>\n\n📅 | Event on <b>{day}/{month}</b>\n\n{events}'

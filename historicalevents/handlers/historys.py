@@ -27,7 +27,7 @@ def get_history(CHANNEL):
                     message = (
                         f"<b>Narrated story 📰</b>\n\n"
                         f"<code>{caption}</code>\n\n"
-                        f"<blockquote>💬 Did you know? Follow the @today_in_historys.</blockquote>"
+                        f"<blockquote>💬 Did you know? Follow the @today_in_historys and access our website histday.com.</blockquote>"
                     )
                     bot.send_photo(CHANNEL, photo=photo_url, caption=message, parse_mode='HTML')
                 else:

@@ -38,11 +38,15 @@ def send_historical_events_group_image(chat_id):
             inline_keyboard = types.InlineKeyboardMarkup()
             inline_keyboard.add(
                 types.InlineKeyboardButton(
-                    text='\U0001f4e2 Official Channel',
+                    text='Official Channel',
                     url='https://t.me/today_in_historys',
+                ),
+                types.InlineKeyboardButton(
+                    text='Website', 
+                    url='https://www.histday.com',
                 )
             )
-
+            
             photo_url = random_event['pages'][0]['thumbnail']['source']
             bot.send_photo(
                 chat_id,

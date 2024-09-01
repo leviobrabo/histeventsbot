@@ -18,7 +18,7 @@ def send_historical_events_channel(CHANNEL):
         events = get_historical_events()
 
         if events:
-            message = f'<b>TODAY IN HISTORY</b>\n\n📅 | Event on <b>{day}/{month}</b>\n\n{events}\n\n<blockquote>💬 Did you know? Follow @today_in_historys.</blockquote>'
+            message = f'<b>TODAY IN HISTORY</b>\n\n📅 | Event on <b>{day}/{month}</b>\n\n{events}\n\n<blockquote>💬 Did you know? Follow @today_in_historys and access our website histday.com.</blockquote>'
             bot.send_message(CHANNEL, message)
         else:
             bot.send_message(
