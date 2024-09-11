@@ -68,7 +68,3 @@ def ads_msg_job():
 
     except Exception as e:
         logger.error("Error sending to users and channels:", str(e))
-
-
-CHANNEL = int(config["FATOSHIST"]["HIST_CHANNEL"])
-CHANNEL_IMG = int(config["FATOSHIST"]["CHANNEL_IMG"])
