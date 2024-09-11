@@ -19,6 +19,7 @@ from historicalevents.config import *
 from historicalevents.core.poll_channel import *
 from historicalevents.core.poll_chats import *
 from historicalevents.database.db import *
+from historicalevents.handlers.ads import *
 from historicalevents.handlers.birth_of_day import *
 from historicalevents.handlers.channel_creation_message import *
 from historicalevents.handlers.christmas_message import *
@@ -151,6 +152,10 @@ schedule.every().day.at('10:30').do(send_question_chat)
 schedule.every().day.at('14:30').do(send_question_chat)
 schedule.every().day.at('16:30').do(send_question_chat)
 schedule.every().day.at('21:30').do(send_question_chat)
+
+# ADS
+
+schedule.every().saturday.at('23:00').do(ads_msg_job)
 
 # Remove polls from the database
 
