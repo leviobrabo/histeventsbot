@@ -12,8 +12,14 @@ from historicalevents.utils.get_historical import *
 
 
 ads_links = [
-    "https://www.cpmrevenuegate.com/aczkcs92r?key=bf57d0551edc1505d3b77aa5cda4bd66",
-    "https://www.cpmrevenuegate.com/n4tz3iaax?key=2a5964f0ee7306247266e686b1cd3934"
+    "https://omg10.com/4/10930545",
+    "https://omg10.com/4/10930547",
+    "https://omg10.com/4/10930546",
+    "https://omg10.com/4/10930523",
+    "https://omg10.com/4/10963924",
+    "https://omg10.com/4/10963927",
+    "https://omg10.com/4/10963930",
+    "https://omg10.com/4/10963933"
 ]
 
 def ads_message_channel_user(user_id):
@@ -23,14 +29,14 @@ def ads_message_channel_user(user_id):
 
     markup = types.InlineKeyboardMarkup()
     channel_ofc = types.InlineKeyboardButton(
-            "ADS", url=random_link  
+            "💰 GANHE DINHEIRO AGORA!", url=random_link
         )
     markup.add(channel_ofc)
 
-    msg_text = "🔔 *Support our channel!* 🔔\n\n" \
-           "Do you like the content? 🕰️📚 How about giving us a hand? By clicking on the ads, you help us keep bringing amazing stories every day, at no cost to you! 🚀✨\n\n" \
-           "Each click makes a difference and helps us keep the channel active and up-to-date. 😊🙏\n\n" \
-           "*Click and support the channel with just one tap!* 🙌"
+    msg_text = "🎉 <b>You can earn money now!</b> 🎉\n\n" \
+           "👆 Click the button below and earn extra cash! 💵\n\n" \
+           "🔥 Don't miss this opportunity! Thousands are earning right now!\n\n" \
+           "➡️ <b>Click here now and start earning!</b>"
 
     bot.send_message(
         user_id, msg_text, parse_mode="HTML", reply_markup=markup
@@ -42,23 +48,45 @@ def ads_msg_job():
         user_models = get_all_users({"msg_private": "true"})
         for user_model in user_models:
             user_id = user_model["user_id"]
-    
-            ads_message_channel_user(user_id)
 
-            logger.success(f"Message sent to user {user_id}")
+            for _ in range(2):
+                ads_message_channel_user(user_id)
+                logger.success(f"Message sent to user {user_id}")
+
+        chat_models = get_all_chats()
+        for chat_model in chat_models:
+            chat_id = chat_model["chat_id"]
+
+            random_link = random.choice(ads_links)
+            markup = types.InlineKeyboardMarkup()
+            channel_ofc = types.InlineKeyboardButton(
+                "💰 EARN MONEY NOW!", url=random_link
+            )
+            markup.add(channel_ofc)
+
+            msg_text = "🎉 <b>You can earn money now!</b> 🎉\n\n" \
+                   "👆 Click the button below and earn extra cash! 💵\n\n" \
+                   "🔥 Don't miss this opportunity! Thousands are earning right now!\n\n" \
+                   "➡️ <b>Click here now and start earning!</b>"
+
+            bot.send_message(
+                chat_id, msg_text, parse_mode="HTML", reply_markup=markup
+            )
+
+            logger.success(f"Message sent to chat {chat_id}")
 
         for channel_id in [CHANNEL, CHANNEL_POST]:
             random_link = random.choice(ads_links)
             markup = types.InlineKeyboardMarkup()
             channel_ofc = types.InlineKeyboardButton(
-                "ADS", url=random_link
+                "💰 EARN MONEY NOW!", url=random_link
             )
             markup.add(channel_ofc)
 
-            msg_text = "🔔 *Support our channel!* 🔔\n\n" \
-                   "Do you like the content? 🕰️📚 How about giving us a hand? By clicking on the ads, you help us keep bringing amazing stories every day, at no cost to you! 🚀✨\n\n" \
-                   "Each click makes a difference and helps us keep the channel active and up-to-date. 😊🙏\n\n" \
-                   "*Click and support the channel with just one tap!* 🙌"
+            msg_text = "🎉 <b>You can earn money now!</b> 🎉\n\n" \
+                   "👆 Click the button below and earn extra cash! 💵\n\n" \
+                   "🔥 Don't miss this opportunity! Thousands are earning right now!\n\n" \
+                   "➡️ <b>Click here now and start earning!</b>"
 
             bot.send_message(
                 channel_id, msg_text, parse_mode="HTML", reply_markup=markup
