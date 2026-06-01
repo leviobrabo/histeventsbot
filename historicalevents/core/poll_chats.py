@@ -136,6 +136,14 @@ def handle_poll_answer(poll_answer):
         if not user:
             add_new_user(user_id, first_name, last_name, username)
 
+        record_user_activity(
+            user_id,
+            'poll_answer',
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+        )
+
         if option_id == correct_option:
             set_hit_user(user_id)
             set_questions_user(user_id)

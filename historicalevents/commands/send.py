@@ -13,6 +13,14 @@ def cmd_sendon(message):
             return
         user_id = message.from_user.id
         user = search_user(user_id)
+        record_user_activity(
+            user_id,
+            'sendon',
+            first_name=message.from_user.first_name,
+            last_name=message.from_user.last_name,
+            username=message.from_user.username,
+        )
+        user = search_user(user_id)
 
         if user:
             if user.get('msg_private') == 'true':
@@ -41,6 +49,14 @@ def cmd_sendoff(message):
         if message.chat.type != 'private':
             return
         user_id = message.from_user.id
+        user = search_user(user_id)
+        record_user_activity(
+            user_id,
+            'sendoff',
+            first_name=message.from_user.first_name,
+            last_name=message.from_user.last_name,
+            username=message.from_user.username,
+        )
         user = search_user(user_id)
 
         if user:

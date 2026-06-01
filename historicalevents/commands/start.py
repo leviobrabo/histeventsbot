@@ -14,6 +14,7 @@ def cmd_start(message):
             user_id = message.from_user.id
             user = search_user(user_id)
             first_name = message.from_user.first_name
+            start_source = extract_start_source(getattr(message, 'text', ''))
 
             if not user:
                 add_user_db(message)
@@ -24,6 +25,16 @@ def cmd_start(message):
                 logger.info(
                     f'New user ID: {user["user_id"]} was created in the database'
                 )
+
+            record_user_activity(
+                user_id,
+                'start',
+                first_name=message.from_user.first_name,
+                last_name=message.from_user.last_name,
+                username=message.from_user.username,
+                start_source=start_source,
+                count_as_first_action=False,
+            )
 
 
             markup = types.InlineKeyboardMarkup()

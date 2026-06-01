@@ -192,13 +192,115 @@ def cmd_group(message):
 @bot.message_handler(commands=['stats'])
 def cmd_stats(message):
     try:
-        count_users = sum(1 for _ in get_all_users())
-        count_groups = sum(1 for _ in get_all_chats())
-        user_stats = f' ☆ {count_users} users\n ☆ {count_groups} Groups'
-        bot.reply_to(message, f'\n──❑ 「 Bot Stats 」 ❑──\n\n{user_stats}')
+        if message.chat.type != 'private':
+            return
+
+        user_id = message.from_user.id
+        user_db = search_user(user_id)
+        if not user_db or user_db.get('sudo') != 'true':
+            bot.reply_to(
+                message, 'This command can only be used by developers!'
+            )
+            return
+
+        count_users = db.users.count_documents({})
+        count_groups = db.chats.count_documents({})
+        dau = get_active_user_count(1)
+        wau = get_active_user_count(7)
+        mau = get_active_user_count(30)
+        inactive_users = max(count_users - mau, 0)
+        wau_total = (wau / count_users * 100) if count_users else 0
+
+        d1 = get_retention_snapshot(1)
+        d7 = get_retention_snapshot(7)
+        d30 = get_retention_snapshot(30)
+
+        source_rows = get_top_start_sources(5)
+        top_sources = '\n'.join(
+            f" - {row['_id']}: {row['users']}"
+            for row in source_rows
+        ) or ' - No tracked sources yet'
+
+        first_action = get_avg_time_to_first_action()
+        if first_action and first_action.get('avg_seconds') is not None:
+            avg_first_action = _format_duration(first_action['avg_seconds'])
+            avg_first_action += f" ({first_action['users']} users)"
+        else:
+            avg_first_action = 'Not enough tracked data yet'
+
+        funnel = get_funnel_counts()
+        vip_rows = get_top_users_by_activity(5)
+        vip_text = '\n'.join(
+            _format_vip_row(index, row)
+            for index, row in enumerate(vip_rows, start=1)
+        ) or ' - No active users tracked yet'
+
+        retention_text = '\n'.join(
+            [
+                _format_retention_line('D1', d1),
+                _format_retention_line('D7', d7),
+                _format_retention_line('D30', d30),
+            ]
+        )
+
+        stats_text = (
+            '<b>Bot Stats</b>\n\n'
+            '<b>Audience</b>\n'
+            f' - Total users: {count_users}\n'
+            f' - Groups: {count_groups}\n'
+            f' - DAU: {dau}\n'
+            f' - WAU: {wau}\n'
+            f' - MAU: {mau}\n'
+            f' - WAU/Total: {wau_total:.1f}%\n'
+            f' - Silent users (30d inactive): {inactive_users}\n\n'
+            '<b>Retention</b>\n'
+            f'{retention_text}\n\n'
+            '<b>Acquisition</b>\n'
+            f'{top_sources}\n\n'
+            '<b>Engagement</b>\n'
+            f' - Avg. time to first action: {avg_first_action}\n'
+            f" - Funnel: start {funnel['started']} -> help {funnel['help']} -> sendon {funnel['notifications_on']} -> poll {funnel['poll_answer']}\n\n"
+            '<b>VIP users</b>\n'
+            f'{vip_text}\n\n'
+            '<b>Revenue</b>\n'
+            ' - ARPU, payer revenue and churn are not available yet.\n'
+            ' - The bot does not track payment or subscription events in MongoDB.'
+        )
+
+        bot.reply_to(message, stats_text, parse_mode='HTML')
     except Exception as e:
 
         logger.error(f'Error while sending bot stats: {e}')
+
+
+def _format_retention_line(label, snapshot):
+    if snapshot['retention_rate'] is None:
+        return f' - {label}: no cohort data yet'
+    return (
+        f" - {label}: {snapshot['retention_rate']:.1f}% "
+        f"({snapshot['retained_users']}/{snapshot['cohort_size']})"
+    )
+
+
+def _format_duration(total_seconds):
+    total_seconds = int(total_seconds)
+    hours, remainder = divmod(total_seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    if hours:
+        return f'{hours}h {minutes}m'
+    if minutes:
+        return f'{minutes}m {seconds}s'
+    return f'{seconds}s'
+
+
+def _format_vip_row(index, user_row):
+    username = user_row.get('username')
+    label = f"@{username}" if username else user_row.get('first_name') or 'Unknown'
+    return (
+        f" - #{index} {label} "
+        f"(<code>{user_row.get('user_id')}</code>) "
+        f"- {user_row.get('actions_total', 0)} actions"
+    )
 
 
 # broadcast

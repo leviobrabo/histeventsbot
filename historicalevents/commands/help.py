@@ -13,6 +13,13 @@ def cmd_help(message):
             return
         user_id = message.from_user.id
         user = search_user(user_id)
+        record_user_activity(
+            user_id,
+            'help',
+            first_name=message.from_user.first_name,
+            last_name=message.from_user.last_name,
+            username=message.from_user.username,
+        )
 
         text = "Hello! I'm a bot programmed to send historical facts every day at preset times, starting at 8 AM. \n\nAdditionally, I have some incredible commands that might be useful for you. Feel free to interact with me and discover more about the world around us! \n\n<b>Simply click on one of them:</b>"
 
