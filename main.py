@@ -439,37 +439,43 @@ def callback_handler(call):
 
 
 def polling_thread():
+    logger.success('Start polling...')
+    online_message = (
+        f'#{BOT_NAME} #ONLINE\n\n<b>Bot is on</b>\n\n'
+        f'<b>Version:</b> {histevents_version}\n'
+        f'<b>Python version:</b> {python_version}\n'
+        f'<b>Lib version:</b> {telebot_version}'
+    )
     try:
-        logger.success('Start polling...')
-        bot.send_message(
-            GROUP_LOG,
-            f'#{BOT_NAME} #ONLINE\n\n<b>Bot is on</b>\n\n<b>Version:</b> {histevents_version}\n<b>Python version:</b> {python_version}\n<b>Lib version:</b> {telebot_version}',
-            message_thread_id=38558,
-        )
-        bot.infinity_polling(allowed_updates=util.update_types)
+        options = {}
+        if LOG_THREAD_ID is not None:
+            options['message_thread_id'] = LOG_THREAD_ID
+        bot.send_message(GROUP_LOG, online_message, **options)
     except Exception as e:
-        logger.error(f"Error in polling_thread: {e}")
-        bot.stop_polling()
+        logger.warning(f'Could not send startup notification: {e}')
+
+    while True:
+        try:
+            bot.infinity_polling(allowed_updates=util.update_types)
+            logger.warning('Polling returned unexpectedly; restarting in 5 seconds')
+        except Exception as e:
+            logger.exception(f'Error in polling_thread: {e}')
+        sleep(5)
+
 
 def schedule_thread():
-    try:
-        while True:
+    while True:
+        try:
             schedule.run_pending()
-            sleep(1)
-    except Exception as e:
-        logger.error(f"Error in schedule_thread: {e}")
+        except Exception as e:
+            logger.exception(f'Error in schedule_thread: {e}')
+        sleep(1)
 
 
-polling_thread = threading.Thread(target=polling_thread)
-schedule_thread = threading.Thread(target=schedule_thread)
-
-try:
-    # set_my_configs()
-    polling_thread.start()
-    schedule_thread.start()
-except Exception as e:
-     logger.error(f"Error starting threads: {e}")
-
-
-
-
+if __name__ == '__main__':
+    polling_worker = threading.Thread(target=polling_thread, name='telegram-polling')
+    schedule_worker = threading.Thread(target=schedule_thread, name='scheduled-jobs')
+    polling_worker.start()
+    schedule_worker.start()
+    polling_worker.join()
+    schedule_worker.join()
