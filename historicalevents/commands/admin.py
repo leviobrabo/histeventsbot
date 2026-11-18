@@ -49,7 +49,7 @@ def cmd_fwdoff(message):
         )
         bot.send_message(
             GROUP_LOG,
-            f'<b>#{BOT_USERNAME} #Fwdoff</b>\n\<b>Chat</b>: {chat_name}\n<b>ID:</b> <code>{chat_id}</code>',
+            f'<b>#{BOT_USERNAME} #Fwdoff</b>\n<b>Chat</b>: {chat_name}\n<b>ID:</b> <code>{chat_id}</code>',
         )
 
     except Exception as e:
@@ -100,7 +100,7 @@ def cmd_fwdon(message):
         )
         bot.send_message(
             GROUP_LOG,
-            f'<b>#{BOT_USERNAME} #Fwdon</b>\n\<b>Chat</b>: {chat_name}\n<b>ID:</b> <code>{chat_id}</code>',
+            f'<b>#{BOT_USERNAME} #Fwdon</b>\n<b>Chat</b>: {chat_name}\n<b>ID:</b> <code>{chat_id}</code>',
         )
     except Exception as e:
 
